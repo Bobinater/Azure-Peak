@@ -6,7 +6,8 @@
 	attack_verb = list("strikes", "hits")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
-	penfactor = 15
+	penfactor = -70
+	damfactor = 1.1
 	swingdelay = 0
 	icon_state = "instrike"
 	item_d_type = "blunt"
@@ -16,8 +17,8 @@
 	blade_class = BCLASS_SMASH
 	attack_verb = list("smashes")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	penfactor = 80
-	damfactor = 1.1
+	penfactor = -100
+	damfactor = 1.5
 	swingdelay = 10
 	icon_state = "insmash"
 	item_d_type = "blunt"
@@ -43,7 +44,7 @@
 	force = 20
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/effect/daze)
 	name = "mace"
 	desc = "Helps anyone fall asleep."
 	icon_state = "mace"
@@ -59,13 +60,13 @@
 	associated_skill = /datum/skill/combat/maces
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/iron
-	gripped_intents = list(/datum/intent/mace/strike,/datum/intent/mace/smash)
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	swingsound = BLUNTWOOSH_MED
 	minstr = 7
 	wdefense = 2
 	wbalance = -1
-	blade_dulling = DULLING_BASHCHOP
+	blade_dulling = DULLING_SHAFT_METAL
+	intdamage_factor = 1.35
 
 /obj/item/rogueweapon/mace/church
 	force = 25
@@ -75,7 +76,6 @@
 	icon_state = "churchmace"
 	wbalance = -1
 	smeltresult = /obj/item/ingot/steel
-	blade_dulling = DULLING_BASH
 	wdefense = 3
 
 /obj/item/rogueweapon/mace/steel
@@ -86,7 +86,6 @@
 	icon_state = "smace"
 	wbalance = -1
 	smeltresult = /obj/item/ingot/steel
-	blade_dulling = DULLING_BASH
 	wdefense = 3
 	smelt_bar_num = 2
 
@@ -96,7 +95,7 @@
 	icon_state = "silverhammer"
 	force = 24
 	gripped_intents = null
-	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/effect/daze)
 	wdefense = 4
 	smeltresult = /obj/item/ingot/silver
 	smelt_bar_num = 2
@@ -165,6 +164,8 @@
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
 	smeltresult = /obj/item/ash
+	anvilrepair = /datum/skill/craft/carpentry
+	blade_dulling = DULLING_SHAFT_WOOD
 	minstr = 7
 	resistance_flags = FLAMMABLE
 
@@ -174,12 +175,14 @@
 
 /datum/intent/mace/strike/wood
 	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (2).ogg')
-	penfactor = 10
+	penfactor = -60
 
 /datum/intent/mace/smash/wood
 	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (2).ogg')
-	penfactor = 20
+	penfactor = -100
 
+/datum/intent/mace/smash/wood/ranged
+	reach = 2
 
 /obj/item/rogueweapon/mace/cudgel
 	name = "cudgel"
@@ -195,8 +198,18 @@
 	minstr = 7
 	wdefense = 3
 	resistance_flags = FLAMMABLE
+	blade_dulling = DULLING_SHAFT_WOOD
 	grid_width = 32
 	grid_height = 96
+
+/obj/item/rogueweapon/mace/cudgel/copper
+	name = "copper bludgeon"
+	desc = "An extremely crude weapon for cruder bastards."
+	force = 15
+	icon_state = "cbludgeon"
+	force_wielded = 20
+	smeltresult = /obj/item/ingot/copper
+	wdefense = 2
 
 /obj/item/rogueweapon/mace/cudgel/justice
 	name = "'Justice'"
@@ -208,6 +221,7 @@
 	smeltresult = /obj/item/ingot/steel
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
+	blade_dulling = DULLING_SHAFT_REINFORCED
 	wbalance = 4
 	minstr = 7
 	wdefense = 5
@@ -235,6 +249,8 @@
 	wdefense = 5
 	wbalance = 0
 	associated_skill = /datum/skill/combat/swords
+	anvilrepair = /datum/skill/craft/carpentry
+	blade_dulling = DULLING_SHAFT_REINFORCED
 	resistance_flags = FLAMMABLE
 
 
@@ -294,7 +310,7 @@
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/rangedthrust)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/rangedthrust, /datum/intent/effect/daze)
 	name = "Goedendag"
 	desc = "Good morning."
 	icon_state = "goedendag"
@@ -312,6 +328,7 @@
 	pixel_x = -16
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	blade_dulling = DULLING_SHAFT_WOOD
 	dropshrink = 0.6
 	bigboy = TRUE
 	gripsprite = TRUE
@@ -334,6 +351,19 @@
 	force = 15
 	force_wielded = 35
 	smeltresult = /obj/item/ingot/steel
+	blade_dulling = DULLING_SHAFT_METAL
+	smelt_bar_num = 2
+
+/obj/item/rogueweapon/mace/goden/deepduke
+	name = "deep duke's staff"
+	desc = "A staff made of seaglass and sturdy but unusual metal, holding no power after its misled owner's death. More useful as a bashing tool than a magic focus."
+	icon = 'icons/roguetown/mob/monster/pufferboss.dmi'
+	icon_state = "pufferprod"
+	force = 15
+	force_wielded = 35
+	minstr = 11
+	max_integrity = 900
+	smeltresult = /obj/item/ingot/steelholy
 	smelt_bar_num = 2
 
 /obj/item/rogueweapon/mace/goden/steel/ravox
@@ -352,7 +382,6 @@
 	wbalance = -1
 	dropshrink = 0.75
 	slot_flags = ITEM_SLOT_BACK //Looks better on back
-	blade_dulling = DULLING_BASH
 	smelt_bar_num = 2
 
 /obj/item/rogueweapon/mace/goden/psymace/ComponentInitialize()
@@ -374,7 +403,7 @@
 	icon_state = "iwarhammer"
 	wbalance = -1
 	smeltresult = /obj/item/ingot/iron
-	blade_dulling = DULLING_BASH
+	blade_dulling = DULLING_SHAFT_REINFORCED
 	wdefense = 3
 
 /obj/item/rogueweapon/mace/warhammer/steel
@@ -384,6 +413,7 @@
 	desc = "A fine steel warhammer, makes a satisfying sound when paired with a knight's helm."
 	icon_state = "swarhammer"
 	smeltresult = /obj/item/ingot/steel
+	blade_dulling = DULLING_SHAFT_METAL
 	wdefense = 4
 
 /obj/item/rogueweapon/mace/warhammer/getonmobprop(tag)
@@ -416,10 +446,10 @@
 	icon_state = "inpick"
 	blade_class = BCLASS_PICK
 	attack_verb = list("picks", "impales")
+	animname = "stab"
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	chargetime = 14
 	misscost = 1
-	no_early_release = TRUE
+	swingdelay = 15
 	penfactor = 80
 	damfactor = 0.9
 	item_d_type = "stab"

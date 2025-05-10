@@ -193,6 +193,7 @@
 #define BCLASS_BITE			"bite"
 #define BCLASS_BURN			"charring"
 #define BCLASS_PEEL			"peel"
+#define BCLASS_EFFECT		"effect"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
@@ -212,6 +213,10 @@
 #define DULLING_BASHCHOP 3
 #define DULLING_PICK 4 //rockwalls
 #define DULLING_FLOOR 5 //floors, only attacked by overhead smash and chop intents like from 2hammers
+#define DULLING_SHAFT_WOOD 6
+#define DULLING_SHAFT_REINFORCED 7
+#define DULLING_SHAFT_METAL 8
+#define DULLING_SHAFT_GRAND 9
 //see get_complex_damage()
 
 //NOTE: INTENT_HOTKEY_* defines are not actual intents!

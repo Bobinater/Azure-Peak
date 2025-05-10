@@ -16,21 +16,22 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
 	backr = /obj/item/storage/backpack/rogue/satchel
-	r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/quiver/arrows
-	beltl = /obj/item/flashlight/flare/torch/lantern
+	beltl = /obj/item/rogueweapon/sword/iron/messer
 	backpack_contents = list(
 						/obj/item/flint = 1,
 						/obj/item/bait = 1,
 						/obj/item/rogueweapon/huntingknife = 1,
 						/obj/item/flashlight/flare/torch = 1,
+						/obj/item/flashlight/flare/torch/lantern = 1
 						)
 	gloves = /obj/item/clothing/gloves/roguetown/leather
 	ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)
 
 	if(H.mind)
-		H.mind.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+		H.mind.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
@@ -44,7 +45,7 @@
 		H.mind.adjust_skillrank(/datum/skill/craft/tanning, 3, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
-		H.mind.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
+		H.mind.adjust_skillrank(/datum/skill/labor/butchering, 3, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)

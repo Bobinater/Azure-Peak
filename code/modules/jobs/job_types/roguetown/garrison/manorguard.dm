@@ -9,7 +9,9 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)
-	tutorial = "Having proven yourself loyal and capable, you are entrusted to defend the town and enforce its laws. Trained regularly in combat and siege warfare, you deal with threats - both within and without."
+	tutorial = "Having proven yourself loyal and capable, you are entrusted to defend the town and enforce its laws. \
+				Trained regularly in combat and siege warfare, you deal with threats - both within and without. \
+				Obey your Sergeant-at-Arms, the Marshal, and the Crown. Show the nobles and knights your respect, so that you may earn it in turn. Not as a commoner, but as a soldier.."
 	display_order = JDO_CASTLEGUARD
 	whitelist_req = TRUE
 
@@ -91,7 +93,7 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Warhammer & Shield","Axe & Shield","Halberd")
+	var/weapons = list("Warhammer & Shield","Axe & Shield","Halberd","Greataxe")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -104,7 +106,9 @@
 		if("Halberd")
 			r_hand = /obj/item/rogueweapon/halberd
 			backl = /obj/item/gwstrap
-
+		if("Greataxe")
+			r_hand = /obj/item/rogueweapon/greataxe
+			backl = /obj/item/gwstrap
 	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/rope/chain = 1, /obj/item/storage/keyring/guardcastle)
 	H.verbs |= /mob/proc/haltyell
 
@@ -133,7 +137,7 @@
 	H.mind.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
 	H.mind.adjust_skillrank(/datum/skill/misc/tracking, 2, TRUE)
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_GUARDSMAN, TRAIT_GENERIC) //+1 spd, con, end, +3 per in town
+	ADD_TRAIT(H, TRAIT_GUARDSMAN, TRAIT_GENERIC) //+1 spd, con, end, +2 per in town
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 	//Garrison ranged/speed class. Time to go wild
@@ -145,20 +149,19 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded		//Helps against arrows; makes sense for a ranged-type role.
 	head = /obj/item/clothing/head/roguetown/helmet/kettle
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Crossbow","Longbow","Sling")
+	var/weapons = list("Crossbow","Bow","Sling")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Crossbow")
 			beltr = /obj/item/quiver/bolts
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-		if("Longbow") // They can head down to the armory to sideshift into one of the other bows.
+		if("Bow") // They can head down to the armory to sideshift into one of the other bows.
 			beltr = /obj/item/quiver/arrows
-			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
+			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 		if("Sling")
 			beltr = /obj/item/quiver/sling/iron
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
@@ -168,8 +171,9 @@
 
 /datum/advclass/manorguard/cavalry
 	name = "Cavalryman"
-	tutorial = "You are a professional soldier of the realm, specializing in the steady beat of hoof falls. Lighter and more expendable then the knights, you charge with lance in hand. Beast sold seperately."
+	tutorial = "You are a professional soldier of the realm, specializing in the steady beat of hoof falls. Lighter and more expendable then the knights, you charge with lance in hand."
 	outfit = /datum/outfit/job/roguetown/manorguard/cavalry
+	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled //Since knights start with the Buck
 
 	category_tags = list(CTAG_MENATARMS)
 
@@ -191,7 +195,7 @@
 	H.mind.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE) 		// Like the other horselords.
 	H.mind.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)	//Best tracker. Might as well give it something to stick-out utility wise.
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_GUARDSMAN, TRAIT_GENERIC) //+1 spd, con, end, +3 per in town
+	ADD_TRAIT(H, TRAIT_GUARDSMAN, TRAIT_GENERIC) //+1 spd, con, end, +2 per in town
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 	//Garrison mounted class; charge and charge often.

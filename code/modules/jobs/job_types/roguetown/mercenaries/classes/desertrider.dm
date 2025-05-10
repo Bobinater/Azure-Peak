@@ -109,14 +109,16 @@
 			H.mind.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
-			H.mind.adjust_spellpoints(1)
+			H.mind.adjust_spellpoints(4)
 			ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 			H.change_stat("perception", -1)
 			H.change_stat("endurance", 2)
 			H.change_stat("intelligence", 2)
 			H.change_stat("speed", 3)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/push_spell)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 			r_hand = /obj/item/rogueweapon/sword/sabre/shamshir
 			armor = /obj/item/clothing/suit/roguetown/shirt/robe/magered
 			backr = /obj/item/storage/backpack/rogue/satchel/black

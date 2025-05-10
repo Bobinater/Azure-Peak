@@ -2,7 +2,6 @@
 	name = "Lord of Heartfelt"
 	greet_text = "You are the Lord of Heartfelt, ruler of a once-prosperous barony now in ruin. Guided by your Magos, you journey to the Peak, seeking aid to restore your domain to its former glory, or perhaps claim a new throne."
 	outfit = /datum/outfit/job/roguetown/heartfelt/lord
-	allowed_sexes = list(MALE)
 	allowed_races = RACES_NO_CONSTRUCT
 	grant_lit_torch = TRUE
 	show_wanderer_examine = FALSE
@@ -211,7 +210,7 @@
 	name = "Magos of Heartfelt"
 	greet_text = "You are the Magos of Heartfelt, renowned for your arcane knowledge yet unable to foresee the tragedy that befell your home. Drawn by a guiding star to the Peak, you seek answers and perhaps a new purpose in the wake of destruction."
 	outfit = /datum/outfit/job/roguetown/heartfelt/magos
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = RACES_NO_CONSTRUCT
 	grant_lit_torch = TRUE
 	show_wanderer_examine = FALSE
 
@@ -229,6 +228,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/poison,/obj/item/reagent_containers/glass/bottle/rogue/healthpot)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, "[type]")
+	ADD_TRAIT(H, TRAIT_ARCYNE_T4, TRAIT_GENERIC)
 	if(H.mind)
 		H.mind.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
@@ -248,21 +248,21 @@
 		H.change_stat("strength", -1)
 		H.change_stat("constitution", -1)
 		H.change_stat("intelligence", 4)
-		H.mind.adjust_spellpoints(3)
+		H.mind.adjust_spellpoints(11)
 		ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 		if(H.age == AGE_OLD)
 			H.mind.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.change_stat("speed", -1)
 			H.change_stat("intelligence", 1)
 			H.change_stat("perception", 1)
-			H.mind.adjust_spellpoints(1)
+			H.mind.adjust_spellpoints(2)
 			if(ishumannorthern(H))
 				belt = /obj/item/storage/belt/rogue/leather/plaquegold
 				cloak = null
 				head = /obj/item/clothing/head/roguetown/wizhat
 				armor = /obj/item/clothing/suit/roguetown/shirt/robe/wizard
 				H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
-		var/list/spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation, /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater)
+		var/list/spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		for(var/S in spells)
 			H.mind.AddSpell(new S)
 
@@ -270,7 +270,7 @@
 	name = "Prior of Heartfelt"
 	greet_text = "The Prior of Heartfelt, you were destined for ascension within the Church, but fate intervened with the barony's downfall, delaying it indefinitely. Still guided by the blessings of Astrata, you journey to the Peak, determined to offer what aid and solace you can."
 	outfit = /datum/outfit/job/roguetown/heartfelt/prior
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = RACES_NO_CONSTRUCT
 	grant_lit_torch = TRUE
 	show_wanderer_examine = FALSE
 

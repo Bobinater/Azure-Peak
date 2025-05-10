@@ -113,7 +113,7 @@
 			H.set_blindness(0)
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
-			var/weapons = list("Bastard Sword","Mace + Shield","Flail + Shield","Billhook")
+			var/weapons = list("Bastard Sword","Mace + Shield","Flail + Shield","Billhook","Battle Axe","Greataxe")
 			var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 			switch(weapon_choice)
 				if("Bastard Sword")
@@ -133,6 +133,13 @@
 					H.mind.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 					r_hand = /obj/item/rogueweapon/spear/billhook
 					backr = /obj/item/gwstrap
+				if("Battle Axe")
+					H.mind.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
+					r_hand = /obj/item/rogueweapon/stoneaxe/battle
+				if("Greataxe")
+					H.mind.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
+					r_hand = /obj/item/rogueweapon/greataxe
+					backr = /obj/item/gwstrap
 			H.change_stat("strength", 2)
 			H.change_stat("constitution", 1)
 			H.change_stat("endurance", 1)
@@ -148,7 +155,7 @@
 			belt = /obj/item/storage/belt/rogue/leather
 			backr = /obj/item/storage/backpack/rogue/satchel
 			beltl = /obj/item/flashlight/flare/torch/lantern
-			backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/rogueweapon/hammer = 1, /obj/item/rogueweapon/tongs = 1)
+			backpack_contents = list(/obj/item/storage/belt/rogue/pouch/coins/poor = 1, /obj/item/rogueweapon/hammer/iron = 1, /obj/item/rogueweapon/tongs = 1)
 			var/armors = list("Light Armor","Medium Armor")
 			var/armor_choice = input("Choose your armor.", "TAKE UP ARMS") as anything in armors
 			switch(armor_choice)
@@ -164,17 +171,17 @@
 					gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 					beltr = /obj/item/rogueweapon/sword/iron
 					ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-			H.mind.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
+			H.mind.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
-			H.mind.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+			H.mind.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-			H.mind.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-			H.mind.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+			H.mind.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+			H.mind.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 			H.set_blindness(0)

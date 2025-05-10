@@ -101,7 +101,7 @@
 			neck = /obj/item/storage/belt/rogue/pouch/coins/mid
 			beltl = /obj/item/flashlight/flare/torch/lantern
 			beltr = /obj/item/rogueweapon/huntingknife
-			backpack_contents = list(/obj/item/clothing/ring/silver = 2, /obj/item/clothing/ring/gold = 1, /obj/item/rogueweapon/tongs = 1, /obj/item/rogueweapon/hammer = 1, /obj/item/roguegem/yellow = 1, /obj/item/roguegem/green = 1)
+			backpack_contents = list(/obj/item/clothing/ring/silver = 2, /obj/item/clothing/ring/gold = 1, /obj/item/rogueweapon/tongs = 1, /obj/item/rogueweapon/hammer/steel = 1, /obj/item/roguegem/yellow = 1, /obj/item/roguegem/green = 1)
 			H.change_stat("intelligence", 3)
 			H.change_stat("perception", 1)
 			H.change_stat("strength", 1)

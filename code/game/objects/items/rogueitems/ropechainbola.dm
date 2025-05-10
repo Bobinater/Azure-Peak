@@ -81,7 +81,7 @@
 						span_userdanger("[user] is trying to tie my arms with [src.name]!"))
 	playsound(loc, cuffsound, 100, TRUE, -2)
 
-	if(!(do_mob(user, C, 60 * surrender_mod) && C.get_num_arms(FALSE)))
+	if(!(do_mob(user, C, 60 * surrender_mod, double_progress = TRUE) && C.get_num_arms(FALSE)))
 		to_chat(user, span_warning("I fail to tie up [C]!"))
 		return
 
@@ -198,6 +198,22 @@
 	gender = NEUTER
 	var/knockdown = 0
 
+/obj/item/net/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+
+/obj/item/net/proc/on_drop()
+	remove_effect()
+
+/obj/item/net/proc/remove_effect()
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		if(M.legcuffed == src)
+			M.legcuffed = null
+			M.update_inv_legcuffed()
+			if(M.has_status_effect(/datum/status_effect/debuff/netted))
+				M.remove_status_effect(/datum/status_effect/debuff/netted)
+
 /obj/item/net/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	if(!..())
 		return
@@ -222,11 +238,5 @@
 
 // Failsafe in case the item somehow ends up being destroyed
 /obj/item/net/Destroy()
-	if(iscarbon(loc))
-		var/mob/living/carbon/M = loc
-		if(M.legcuffed == src)
-			M.legcuffed = null
-			M.update_inv_legcuffed()
-			if(M.has_status_effect(/datum/status_effect/debuff/netted))
-				M.remove_status_effect(/datum/status_effect/debuff/netted)
+	remove_effect()
 	return ..()	

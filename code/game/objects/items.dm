@@ -132,6 +132,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
+	var/mill_result = null // What it grinds into on a millstone or similar.
 
 	var/canMouseDown = FALSE
 	var/can_parry = FALSE
@@ -153,6 +154,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/wbalance = 0
 	var/wdefense = 0 //better at defending
 	var/minstr = 0  //for weapons
+	var/intdamage_factor = 0	//%-age of our raw damage that is dealt to armor or weapon on hit / parry.
 
 	var/sleeved = null
 	var/sleevetype = null
@@ -167,6 +169,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/bloody_icon = 'icons/effects/blood.dmi'
 	var/bloody_icon_state = "itemblood"
+	var/dam_icon = 'icons/effects/item_damage32.dmi'
+	var/dam_icon_state = "itemdamaged"
 	var/boobed = FALSE
 
 	var/firefuel = 0 //add this idiot
@@ -259,6 +263,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					B.remove()
 					B.generate_appearance()
 					B.apply()
+				if (obj_broken)
+					update_damaged_state()
 			return
 		if(wielded)
 			if(gripsprite)
@@ -268,6 +274,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					B.remove()
 					B.generate_appearance()
 					B.apply()
+				if (obj_broken)
+					update_damaged_state()
 			if(toggle_state)
 				icon_state = "[toggle_state]1"
 			return
@@ -281,6 +289,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				B.remove()
 				B.generate_appearance()
 				B.apply()
+			if (obj_broken)
+				update_damaged_state()
 
 /obj/item/Initialize()
 	if (attack_verb)
@@ -428,7 +438,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					inspec += "Great"
 
 		if(alt_intents)
-			inspec += "\n<b>ALT-GRIP</b>"
+			inspec += "\n<b>ALT-GRIP (RIGHT CLICK WHILE IN HAND)</b>"
+
+		var/shafttext = get_blade_dulling_text(src, verbose = TRUE)
+		if(shafttext)
+			inspec += "\n<b>SHAFT:</b> [shafttext]"
 
 		if(gripped_intents)
 			inspec += "\n<b>TWO-HANDED</b>"
@@ -446,6 +460,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 		if(associated_skill && associated_skill.name)
 			inspec += "\n<b>SKILL:</b> [associated_skill.name]"
+		
+		if(intdamage_factor)
+			inspec += "\n<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]%"
 
 //**** CLOTHING STUFF
 
@@ -461,10 +478,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 						inspec += "<b>[capitalize(zone)]</b> | "
 				else
 					var/list/zones = list()
-					//We have some part peeled, so we turn the printout into verbose mode and highlight the missing coverage.
-					for(var/zoneorg in body_parts_covered2organ_names(C.body_parts_covered, verbose = TRUE))
+					//We have some part peeled, so we turn the printout into precise mode and highlight the missing coverage.
+					for(var/zoneorg in body_parts_covered2organ_names(C.body_parts_covered, precise = TRUE))
 						zones += zoneorg
-					for(var/zonedyn in body_parts_covered2organ_names(C.body_parts_covered_dynamic, verbose = TRUE))
+					for(var/zonedyn in body_parts_covered2organ_names(C.body_parts_covered_dynamic, precise = TRUE))
 						inspec += "<b>[capitalize(zonedyn)]</b> | "
 						if(zonedyn in zones)
 							zones.Remove(zonedyn)
@@ -1224,6 +1241,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(user.get_num_arms() < 2)
 		to_chat(user, span_warning("I don't have enough hands."))
 		return
+	if (obj_broken)
+		to_chat(user, span_warning("It's completely broken."))
+		return
 	wielded = TRUE
 	if(force_wielded)
 		force = force_wielded
@@ -1245,7 +1265,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(altgripped || wielded) //Trying to unwield it
 		ungrip(user)
 		return
-	if(alt_intents)
+	if(alt_intents && !gripped_intents)
 		altgrip(user)
 	if(gripped_intents)
 		wield(user)
@@ -1274,6 +1294,55 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			str += "NO DEFENSE"
 	return str
 
+/obj/item/obj_break(damage_flag)
+	..()
+
+	update_damaged_state()
+	if(!ismob(loc))
+		return
+	var/mob/M = loc
+
+	if(altgripped || wielded)
+		ungrip(M, FALSE)
+
+	to_chat(M, "\The [src] BREAKS...!")
+
+/obj/item/obj_fix()
+	..()
+	update_damaged_state()
+
+/obj/item/obj_destruction(damage_flag)
+	if (damage_flag == "acid")
+		obj_destroyed = TRUE
+		acid_melt()
+		return TRUE
+	if (damage_flag == "fire")
+		obj_destroyed = TRUE
+		burn()
+		return TRUE
+	if (ismob(loc))
+		return FALSE
+
+	obj_destroyed = TRUE
+	if(destroy_sound)
+		playsound(src, destroy_sound, 100, TRUE)
+	if(destroy_message)
+		visible_message(destroy_message)
+	deconstruct(FALSE)
+
+	return TRUE
+
+/obj/item/proc/update_damaged_state()
+	cut_overlays()
+	if (!obj_broken)
+		return
+	var/icon/damaged_icon = icon(initial(icon), icon_state, , TRUE)
+	damaged_icon.Blend("#fff", ICON_ADD)
+	damaged_icon.Blend(icon(dam_icon, dam_icon_state), ICON_MULTIPLY)
+	var/mutable_appearance/damage = new(damaged_icon)
+	damage.alpha = 150
+	add_overlay(damage)
+
 /// Proc that is only called with the Peel intent. Stacks consecutive hits, shreds coverage once a threshold is met. Thresholds are defined on /obj/item
 /obj/item/proc/peel_coverage(bodypart, divisor)
 	var/coveragezone = attackzone2coveragezone(bodypart)
@@ -1286,7 +1355,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if(peel_count >= peel_threshold)
 				body_parts_covered_dynamic &= ~coveragezone
 				playsound(src, 'sound/foley/peeled_coverage.ogg', 100)
-				var/list/peeledpart = body_parts_covered2organ_names(coveragezone, verbose = TRUE)
+				var/list/peeledpart = body_parts_covered2organ_names(coveragezone, precise = TRUE)
 				var/parttext
 				if(length(peeledpart))
 					parttext = peeledpart[1]	//There should really only be one bodypart that gets exposed here.
@@ -1350,3 +1419,21 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			return FOOT_LEFT
 		if(BODY_ZONE_PRECISE_R_FOOT)
 			return FOOT_RIGHT
+
+/obj/item/examine(mob/user)
+	. = ..()
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.STAINT < 9)
+			return .
+	if(isnull(anvilrepair) && isnull(sewrepair))
+		return .
+	else
+		var/str = "This object can be repaired using "
+		if(anvilrepair)	
+			var/datum/skill/S = anvilrepair		//Should only ever be a skill or null
+			str += "<b>[initial(S.name)]</b> and a hammer."
+		if(sewrepair)
+			str += "<b>Sewing</b> and a needle."
+		str = span_info(str)
+		. += str

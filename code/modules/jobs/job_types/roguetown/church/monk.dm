@@ -70,6 +70,8 @@
 			cloak = /obj/item/clothing/cloak/raincloak/mortus
 		if(/datum/patron/divine/pestra)
 			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+			armor = /obj/item/clothing/suit/roguetown/shirt/robe/phys
+			head = /obj/item/clothing/head/roguetown/roguehood/phys
 			shoes = /obj/item/clothing/shoes/roguetown/boots
 			pants = /obj/item/clothing/under/roguetown/trou/leather/mourning
 			cloak = /obj/item/clothing/cloak/templar/pestran

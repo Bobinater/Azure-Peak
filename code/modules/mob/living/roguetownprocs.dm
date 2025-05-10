@@ -19,15 +19,15 @@
 
 	if(check_zone(zone) == zone)	//Are we targeting a big limb or chest?
 		chance2hit += 10
-	else
-		chance2hit -= 10			//If not (IE hands, eyes, etc), it's harder to hit.
 
 	if(user.mind)
 		chance2hit += (user.mind.get_skill_level(associated_skill) * 8)
 
 	if(used_intent)
-		if(used_intent.blade_class == BCLASS_STAB || used_intent.blade_class == BCLASS_PEEL)
+		if(used_intent.blade_class == BCLASS_STAB)
 			chance2hit += 10
+		if(used_intent.blade_class == BCLASS_PEEL)
+			chance2hit += 25
 		if(used_intent.blade_class == BCLASS_CUT)
 			chance2hit += 6
 		if((used_intent.blade_class == BCLASS_BLUNT || used_intent.blade_class == BCLASS_SMASH) && check_zone(zone) != zone)	//A mace can't hit the eyes very well
@@ -38,7 +38,7 @@
 			chance2hit += 10
 
 	if(user.STAPER > 10)
-		chance2hit += (min((user.STAPER-10)*6, 24))
+		chance2hit += (min((user.STAPER-10)*8, 40))
 
 	if(user.STAPER < 10)
 		chance2hit -= ((10-user.STAPER)*10)
@@ -48,7 +48,7 @@
 	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
 		chance2hit -= 20
 
-	chance2hit = CLAMP(chance2hit, 5, 90)
+	chance2hit = CLAMP(chance2hit, 5, 93)
 
 	if(prob(chance2hit))
 		return zone
@@ -133,7 +133,7 @@
 			if(world.time < last_parry + setparrytime)
 				if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 					return FALSE
-			if(has_status_effect(/datum/status_effect/debuff/feinted))
+			if(has_status_effect(/datum/status_effect/debuff/exposed))
 				return FALSE
 			if(has_status_effect(/datum/status_effect/debuff/riposted))
 				return FALSE
@@ -176,7 +176,11 @@
 
 			if(highest_defense <= (H.mind ? (H.mind.get_skill_level(/datum/skill/combat/unarmed) * 20) : 20))
 				defender_skill = H.mind?.get_skill_level(/datum/skill/combat/unarmed)
-				prob2defend += (defender_skill * 20)
+				var/obj/B = H.get_item_by_slot(SLOT_WRISTS)
+				if(istype(B, /obj/item/clothing/wrists/roguetown/bracers))
+					prob2defend += (defender_skill * 30)
+				else
+					prob2defend += (defender_skill * 10)		// no bracers gonna be butts.
 				weapon_parry = FALSE
 			else
 				defender_skill = H.mind?.get_skill_level(used_weapon.associated_skill)
@@ -212,6 +216,9 @@
 			prob2defend = clamp(prob2defend, 5, 90)
 			if(HAS_TRAIT(user, TRAIT_HARDSHELL) && H.client)	//Dwarf-merc specific limitation w/ their armor on in pvp
 				prob2defend = clamp(prob2defend, 5, 70)
+			if(!H?.check_armor_skill())
+				prob2defend = clamp(prob2defend, 5, 75)			//Caps your max parry to 75 if using armor you're not trained in. Bad dexerity.
+				drained = drained + 5							//More stamina usage for not being trained in the armor you're using.
 
 			//Dual Wielding
 			var/attacker_dualw
@@ -328,6 +335,10 @@
 
 					var/dam2take = round((get_complex_damage(AB,user,used_weapon.blade_dulling)/2),1)
 					if(dam2take)
+						if(!user.mind)
+							dam2take = dam2take * 0.25
+						if(dam2take > 0 && intenty.masteritem?.intdamage_factor)
+							dam2take = dam2take * intenty.masteritem?.intdamage_factor
 						used_weapon.take_damage(max(dam2take,1), BRUTE, used_weapon.d_type)
 					return TRUE
 				else
@@ -356,7 +367,7 @@
 					return FALSE
 			if(has_status_effect(/datum/status_effect/debuff/riposted))
 				return FALSE
-			if(has_status_effect(/datum/status_effect/debuff/feinted))
+			if(has_status_effect(/datum/status_effect/debuff/exposed))
 				return FALSE
 			last_dodge = world.time
 			if(src.loc == user.loc)
@@ -387,15 +398,21 @@
 						dirry += NORTH
 						dirry += SOUTH
 				var/turf/turfy
-				for(var/x in shuffle(dirry.Copy()))
-					turfy = get_step(src,x)
-					if(turfy)
-						if(turfy.density)
-							continue
-						for(var/atom/movable/AM in turfy)
-							if(AM.density)
+				if(fixedeye)
+					var/dodgedir = turn(dir, 180)
+					var/turf/turfcheck = get_step(src, dodgedir)
+					if(turfcheck && !turfcheck.density)
+						turfy = turfcheck
+				if(!turfy)
+					for(var/x in shuffle(dirry.Copy()))
+						turfy = get_step(src,x)
+						if(turfy)
+							if(turfy.density)
 								continue
-						break
+							for(var/atom/movable/AM in turfy)
+								if(AM.density)
+									continue
+							break
 				if(pulledby)
 					return FALSE
 				if(!turfy)
@@ -602,6 +619,32 @@
 		src.visible_message(span_warning("<b>[src]</b> dodges [user]'s attack!"))
 	else
 		src.visible_message(span_warning("<b>[src]</b> easily dodges [user]'s attack!"))
+	if(get_dist(src, user) <= user.used_intent?.reach)	//We are still in range of the attacker's weapon post-dodge
+		var/probclip = 50
+		var/obj/item/IS = L.get_active_held_item()
+		var/obj/item/IU = U.get_active_held_item()
+		if(IS)
+			if(IS.wlength > WLENGTH_NORMAL)
+				probclip += (IS.wlength - WLENGTH_NORMAL) * 10	//if wlength isn't standardised this might skyrocket it to >100%
+			else
+				probclip -= (WLENGTH_NORMAL - IS.wlength) * 10
+		var/dist = (user.used_intent?.reach - get_dist(src, user)) - 1 //-1 because we already are in range and triggered this check to begin with.
+		if(dist > 0)
+			probclip += dist * 10
+		if(L.STALUC != U.STALUC)
+			var/lucmod = L.STALUC - U.STALUC
+			probclip += lucmod * 10
+		if(prob(probclip) && IS && IU)
+			var/dam2take = round((get_complex_damage(IU, user, FALSE)/2),1)
+			if(dam2take)
+				if(!user.mind)
+					dam2take = dam2take * 0.25
+				if(dam2take > 0 && IU.intdamage_factor != 0)
+					dam2take = dam2take * IU.intdamage_factor
+				IS.take_damage(max(dam2take,1), BRUTE, IU.d_type)
+
+			user.visible_message(span_warning("<b>[user]</b> clips [src]'s weapon!"))
+			playsound(user, 'sound/misc/weapon_clip.ogg', 100)
 	dodgecd = FALSE
 //		if(H)
 //			if(H.IsOffBalanced())

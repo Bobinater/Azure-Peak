@@ -79,8 +79,8 @@
 /turf/open/floor/rogue/twig/platform
 	name = "platform"
 	desc = "A destructible platform."
-	damage_deflection = 6
-	max_integrity = 200
+	damage_deflection = 4
+	max_integrity = 100		//It's fucking twig.
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 
@@ -1048,6 +1048,40 @@
 	icon_state = "cobblestone_edges"
 	mouse_opacity = 0
 
+/obj/effect/decal/carpet
+	name = "carpet"
+	pixel_w = -16
+	pixel_z = -17
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover"
+
+/obj/effect/decal/carpet/kover_darkred
+	name = "carpet"
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover_darkred"
+
+/obj/effect/decal/carpet/kover_purple
+	name = "carpet"
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover_purple"
+
+/obj/effect/decal/carpet/kover_black
+	name = "carpet"
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "kover_black"
+
+/obj/effect/decal/carpet/square
+	name = "carpet"
+	pixel_w = -16
+	pixel_z = -16
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "greencarpet"
+
+/obj/effect/decal/carpet/square/black
+	name = "carpet"
+	icon = 'icons/roguetown/misc/64x64.dmi'
+	icon_state = "blackcarpet"
+
 /turf/open/floor/rogue/tile
 	icon_state = "chess"
 	landsound = 'sound/foley/jumpland/tileland.wav'
@@ -1125,6 +1159,9 @@
 	. = ..()
 	icon_state = "concretefloor[rand(1,2)]"
 	dir = pick(GLOB.cardinals)
+
+/turf/open/floor/rogue/concrete/bronze
+	color = "#ff9100"
 
 /turf/open/floor/rogue/metal
 	icon_state = "plating1"

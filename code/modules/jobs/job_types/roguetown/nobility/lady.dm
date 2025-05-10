@@ -44,7 +44,7 @@
 		head = /obj/item/clothing/head/roguetown/nyle/consortcrown
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/winterdress
 		pants = /obj/item/clothing/under/roguetown/tights/stockings/silk/random	//Added Silk Stockings for the female nobles
-		id = /obj/item/clothing/ring/silver
+		id = /obj/item/scomstone/garrison
 		shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	else if(should_wear_masc_clothes(H))
 		head = /obj/item/clothing/head/roguetown/nyle/consortcrown
@@ -81,7 +81,7 @@
 	recruitment_message = "Serve the crown, %RECRUIT!"
 	accept_message = "FOR THE CROWN!"
 	refuse_message = "I refuse."
-	charge_max = 100
+	recharge_time = 100
 
 /obj/effect/proc_holder/spell/self/convertrole/mercenary
 	name = "Recruit Mercenary"
@@ -90,7 +90,7 @@
 	recruitment_message = "Serve the Guild, %RECRUIT!"
 	accept_message = "FOR THE GUILD!"
 	refuse_message = "I refuse."
-	charge_max = 100
+	recharge_time = 100
 
 /obj/effect/proc_holder/spell/self/convertrole/bog
 	name = "Recruit Warden"

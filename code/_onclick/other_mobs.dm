@@ -178,6 +178,8 @@
 
 	next_attack_msg.Cut()
 
+	user.do_attack_animation(src, "bite")
+	playsound(user, 'sound/gore/flesh_eat_01.ogg', 100)
 	var/nodmg = FALSE
 	var/dam2do = 10*(user.STASTR/20)
 	if(HAS_TRAIT(user, TRAIT_STRONGBITE))
@@ -266,9 +268,6 @@
 					return
 				if(A == src)
 					return
-				if(isliving(A))
-					if(!(mobility_flags & MOBILITY_STAND) && pulledby)
-						return
 				if(IsOffBalanced())
 					to_chat(src, span_warning("I haven't regained my balance yet."))
 					return

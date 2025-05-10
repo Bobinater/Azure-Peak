@@ -2,7 +2,6 @@
 	always_availible = TRUE
 	skillcraft = /datum/skill/craft/crafting
 
-
 /datum/crafting_recipe/roguetown/tneedle
 	name = "sewing needle"
 	result = /obj/item/needle/thorn
@@ -144,7 +143,7 @@
 	tools = /obj/item/rogueweapon/huntingknife
 	verbage_simple = "carve"
 	verbage = "carves"
-	craftdiff = 3
+	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/longbow
 	name = "long bow"
@@ -155,7 +154,7 @@
 		)
 	verbage_simple = "string together"
 	verbage = "strings together"
-	craftdiff = 3
+	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/wickercloak
 	name = "wickercloak"
@@ -195,6 +194,12 @@
 	result = /obj/item/rogueweapon/stoneaxe
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/stone = 1)
+
+/datum/crafting_recipe/roguetown/woodhammer
+	name = "wood mallet"
+	result = /obj/item/rogueweapon/hammer/wood
+	reqs = list(/obj/item/grown/log/tree/small = 1,
+				/obj/item/natural/fibers = 1)
 
 /datum/crafting_recipe/roguetown/stonehammer
 	name = "stone hammer"
@@ -267,14 +272,6 @@
 	tools = list(/obj/item/rogueweapon/hammer)
 	craftdiff = 3
 
-/datum/crafting_recipe/roguetown/peasantwarflail
-	name = "peasant war flail"
-	result = /obj/item/rogueweapon/flail/peasantwarflail
-	reqs = list(/obj/item/grown/log/tree/small = 1,
-				/obj/item/rope = 1,
-				/obj/item/rogueweapon/thresher = 1)
-	tools = list(/obj/item/rogueweapon/hammer)
-	craftdiff = 3
 
 /obj/item/rogueweapon/mace/woodclub/crafted
 	sellprice = 8
@@ -285,6 +282,29 @@
 	/obj/item/rogueweapon/woodstaff,
 	/obj/item/rogueweapon/woodstaff)
 	reqs = list(/obj/item/grown/log/tree = 1)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/quarterstaff
+	name = "quarterstaff"
+	result = list(/obj/item/rogueweapon/woodstaff/quarterstaff)
+	reqs = list(/obj/item/grown/log/tree = 1)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/quarterstaff_iron
+	name = "iron-reinforced quarterstaff"
+	result = list(/obj/item/rogueweapon/woodstaff/quarterstaff/iron)
+	reqs = list(/obj/item/rogueweapon/woodstaff/quarterstaff, /obj/item/ingot/iron = 1)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/quarterstaff_steel
+	name = "steel-reinforced quarterstaff"
+	result = list(/obj/item/rogueweapon/woodstaff/quarterstaff/steel)
+	reqs = list(/obj/item/rogueweapon/woodstaff/quarterstaff, /obj/item/ingot/steel = 1)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/woodsword
 	name = "wood sword"
@@ -292,7 +312,8 @@
 					/obj/item/rogueweapon/mace/wsword)
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/fibers = 1)
-	craftdiff = 1
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/woodshield
 	name = "wooden shield"
@@ -300,6 +321,7 @@
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/hide = 1)
 	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/spoon
 	name = "spoon (x3)"
@@ -333,6 +355,8 @@
 	name = "wooden bucket"
 	result = /obj/item/reagent_containers/glass/bucket/wooden
 	reqs = list(/obj/item/grown/log/tree/small = 1)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
 
 /datum/crafting_recipe/roguetown/woodcup
 	name = "wooden cups (x3)"
@@ -585,6 +609,13 @@
 /obj/item/fishingrod/crafted
 	sellprice = 8
 
+/datum/crafting_recipe/roguetown/fishingcage
+	name = "fishing cage"
+	result = /obj/item/fishingcage
+	reqs = list(/obj/item/grown/log/tree/small = 1,
+		/obj/item/grown/log/tree/stick = 2)
+	craftdiff = 2
+
 /datum/crafting_recipe/roguetown/woodspade
 	name = "wood spade"
 	result = /obj/item/rogueweapon/shovel/small
@@ -592,6 +623,38 @@
 			/obj/item/grown/log/tree/stick = 1)
 /obj/item/rogueweapon/shovel/small/crafted
 	sellprice = 5
+
+/datum/crafting_recipe/roguetown/pearlcross
+	name = "amulet (pearls)"
+	result = /obj/item/clothing/neck/roguetown/psicross/pearl
+	reqs = list(/obj/item/natural/fibers = 1,
+			/obj/item/pearl = 3)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/bpearlcross
+	name = "amulet (blue pearls)"
+	result = /obj/item/clothing/neck/roguetown/psicross/bpearl
+	reqs = list(/obj/item/natural/fibers = 1,
+			/obj/item/pearl/blue = 3)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/shellnecklace
+	name = "shell necklace"
+	result = /obj/item/clothing/neck/roguetown/psicross/shell
+	reqs = list(/obj/item/oystershell = 5,
+			/obj/item/natural/fibers = 1)
+
+/datum/crafting_recipe/roguetown/shellbracelet
+	name = "shell bracelet"
+	result = /obj/item/clothing/neck/roguetown/psicross/shell/bracelet
+	reqs = list(/obj/item/oystershell = 3,
+			/obj/item/natural/fibers = 1)
+
+/datum/crafting_recipe/roguetown/abyssoramulet
+	name = "amulet of abyssor"
+	result = /obj/item/clothing/neck/roguetown/psicross/abyssor
+	reqs = list(/obj/item/natural/fibers = 1,
+			/obj/item/pearl/blue = 1)
 
 /datum/crafting_recipe/roguetown/broom
 	name = "broom"
@@ -786,7 +849,14 @@
 	result = /obj/item/clothing/neck/roguetown/collar/surgcollar
 	reqs = list(/obj/item/natural/cloth = 2)
 	craftdiff = 0
-	
+
+/datum/crafting_recipe/roguetown/goodluckcharm
+	name = "cabbit's foot luck charm"
+	result = /obj/item/clothing/neck/roguetown/luckcharm // +1 fortune when worn
+	reqs = list(/obj/item/natural/rabbitsfoot = 1,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 0
+
 // BOUQUETS & CROWNS
 
 /datum/crafting_recipe/roguetown/bouquet_rosa
@@ -955,3 +1025,186 @@
 	reqs = list(/obj/item/natural/bone = 1)
 	tools = list(/obj/item/rogueweapon/huntingknife)
 	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/whetstone
+	name = "whetstone"
+	result = /obj/item/natural/whetstone
+	reqs = list(/obj/item/natural/stone = 1,
+				/obj/item/grown/log/tree/stake = 1)
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/rucksack
+	name = "rucksack"
+	result = /obj/item/storage/backpack/rogue/backpack/bagpack
+	reqs = list(/obj/item/storage/roguebag = 1,
+				/obj/item/rope = 1)
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/rucksack/crafted
+	reqs = list(/obj/item/storage/roguebag/crafted = 1,
+				/obj/item/rope = 1)
+
+/datum/crafting_recipe/roguetown/woodshaft
+	name = "wood shaft x2"
+	result = /obj/item/shaft/wood
+	tools = list(/obj/item/rogueweapon/huntingknife)
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/reinforcedshaft
+	name = "reinforced shaft"
+	result = /obj/item/shaft/reinforced
+	tools = list(/obj/item/rogueweapon/hammer)
+	reqs = list(/obj/item/shaft/wood = 1,
+				/obj/item/natural/whetstone = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry
+	tools = list(/obj/item/rogueweapon/hammer)
+	req_table = TRUE
+	skillcraft = /datum/skill/craft/carpentry
+
+/datum/crafting_recipe/roguetown/peasantry/thresher
+	name = "Thresher (+1 Iron Ingot)"
+	reqs = list(/obj/item/grown/log/tree/stick = 1, 
+				/obj/item/ingot/iron = 1)
+	result = /obj/item/rogueweapon/thresher
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/thresher/whetstone
+	name = "Thresher (+4 Whetstones, +1 Log, +1 Rope)"
+	reqs = list(/obj/item/grown/log/tree/small = 1, 
+				/obj/item/natural/whetstone = 4,
+				/obj/item/rope = 1)
+	result = /obj/item/rogueweapon/thresher
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/shovel
+	name = "Shovel (+1 Iron Ingot, +2 Sticks)"
+	reqs = list(/obj/item/grown/log/tree/stick = 2, 
+				/obj/item/ingot/iron = 1)
+	result = /obj/item/rogueweapon/shovel
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/shovel/whetstone
+	name = "Shovel (+3 Whetstones, +2 Logs, +1 Rope)"
+	reqs = list(/obj/item/grown/log/tree/small = 2, 
+				/obj/item/natural/whetstone = 3,
+				/obj/item/rope = 1)
+	result = /obj/item/rogueweapon/shovel
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/hoe
+	name = "Hoe (+1 Iron Ingot, +2 Sticks)"
+	reqs = list(/obj/item/grown/log/tree/stick = 2, 
+				/obj/item/ingot/iron = 1)
+	result = /obj/item/rogueweapon/hoe
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/hoe/whetstone
+	name = "Shovel (+3 Whetstones, +2 Logs, +1 Rope)"
+	reqs = list(/obj/item/grown/log/tree/small = 2, 
+				/obj/item/natural/whetstone = 3,
+				/obj/item/rope = 1)
+	result = /obj/item/rogueweapon/hoe
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/pitchfork
+	name = "Pitchfork (+1 Iron Ingot, +2 Sticks)"
+	reqs = list(/obj/item/grown/log/tree/stick = 2, 
+				/obj/item/ingot/iron = 1)
+	result = /obj/item/rogueweapon/pitchfork
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/pitchfork/whetstone
+	name = "Pitchfork (+3 Whetstones, +2 Logs, +1 Rope)"
+	reqs = list(/obj/item/grown/log/tree/small = 2, 
+				/obj/item/natural/whetstone = 3,
+				/obj/item/rope = 1)
+	result = /obj/item/rogueweapon/pitchfork
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/peasantry/peasantwarflail
+	name = "peasant war flail (thresher)"
+	result = /obj/item/rogueweapon/flail/peasantwarflail
+	reqs = list(/obj/item/grown/log/tree/small = 2,
+				/obj/item/rope = 1,
+				/obj/item/rogueweapon/thresher = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/goedendag
+	name = "militia goedendag"
+	result = /obj/item/rogueweapon/woodstaff/militia
+	reqs = list(/obj/item/rogueweapon/woodstaff = 1,
+				/obj/item/natural/whetstone = 2,
+				/obj/item/rope = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/waraxe
+	name = "militia shovel-waraxe"
+	result = /obj/item/rogueweapon/greataxe/militia
+	reqs = list(/obj/item/rogueweapon/shovel = 1,
+				/obj/item/grown/log/tree/small = 2,
+				/obj/item/rope = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/warspear_hoe
+	name = "militia warspear (hoe)"
+	result = /obj/item/rogueweapon/spear/militia
+	reqs = list(/obj/item/rogueweapon/hoe = 1,
+			/obj/item/grown/log/tree/small = 2,
+			/obj/item/rope = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/warspear_pitchfork
+	name = "militia warspear (pitchfork)"
+	result = /obj/item/rogueweapon/spear/militia
+	reqs = list(/obj/item/rogueweapon/pitchfork = 1,
+			/obj/item/grown/log/tree/small = 2,
+			/obj/item/rope = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/scythe
+	name = "scythe"
+	result = /obj/item/rogueweapon/scythe
+	reqs = list(/obj/item/natural/whetstone = 1,
+			/obj/item/grown/log/tree/small = 2,
+			/obj/item/rope = 1)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/peasantry/warflail
+	name = "militia flail"
+	result = /obj/item/rogueweapon/flail/militia
+	reqs = list(/obj/item/natural/whetstone = 2,
+				/obj/item/rogueweapon/thresher = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/warpick
+	name = "militia warpick"
+	result = /obj/item/rogueweapon/pick/militia
+	reqs = list(/obj/item/rogueweapon/pick = 1,
+				/obj/item/natural/whetstone = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/warpick_steel
+	name = "militia steel warpick"
+	result = /obj/item/rogueweapon/pick/militia/steel
+	reqs = list(/obj/item/rogueweapon/pick/steel = 1,
+				/obj/item/natural/whetstone = 1)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/maciejowski_knife
+	name = "maciejowski (hunting knife)"
+	result = /obj/item/rogueweapon/sword/falchion/militia
+	reqs = list(/obj/item/rogueweapon/huntingknife = 1,
+				/obj/item/natural/whetstone = 2)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/peasantry/maciejowski_messer
+	name = "maciejowski (iron messer)"
+	result = /obj/item/rogueweapon/sword/falchion/militia
+	reqs = list(/obj/item/rogueweapon/sword/iron/messer = 1,
+				/obj/item/natural/whetstone = 1)
+	craftdiff = 2

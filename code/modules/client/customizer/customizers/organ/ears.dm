@@ -16,7 +16,8 @@
 	organ_type = /obj/item/organ/ears/vulpkanin
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/fox,
-		/datum/sprite_accessory/ears/vulp
+		/datum/sprite_accessory/ears/vulp,
+		/datum/sprite_accessory/ears/big/sandfox_large
 		)
 
 /datum/customizer/organ/ears/lupian
@@ -31,18 +32,21 @@
 		/datum/sprite_accessory/ears/fox,
 		/datum/sprite_accessory/ears/husky,
 		/datum/sprite_accessory/ears/otie,
-		/datum/sprite_accessory/ears/wolf
+		/datum/sprite_accessory/ears/wolf,
+		/datum/sprite_accessory/ears/lab
 	)
 
 /datum/customizer/organ/ears/tajaran
 	customizer_choices = list(/datum/customizer_choice/organ/ears/tajaran)
 
 /datum/customizer_choice/organ/ears/tajaran
-	name = "Tajaran Ears"
-	organ_type = /obj/item/organ/ears/tajaran
+	name = "Tabaxi Ears"
+	organ_type = /obj/item/organ/ears/tajaran         // Renamed them IN GAME but in-code they're still 'tajaran' because im afraid of breaking shit
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/cat_big,
 		/datum/sprite_accessory/ears/cat_normal,
+		/datum/sprite_accessory/ears/miqote,
+		/datum/sprite_accessory/ears/lynx,
 		)
 
 /datum/customizer/organ/ears/axian
@@ -86,6 +90,21 @@
 
 /datum/customizer/organ/ears/goblin 
 	customizer_choices = list(/datum/customizer_choice/organ/ears/goblin)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/ears/halforc
+	name = "Half-Orc Ears"
+	organ_type = /obj/item/organ/ears
+	sprite_accessories = list(
+		/datum/sprite_accessory/ears/goblin,
+		/datum/sprite_accessory/ears/goblin_alt,
+		/datum/sprite_accessory/ears/goblin_small,
+		/datum/sprite_accessory/ears/halforc,
+		/datum/sprite_accessory/ears/elf,
+		/datum/sprite_accessory/ears/elfw)
+
+/datum/customizer/organ/ears/halforc
+	customizer_choices = list(/datum/customizer_choice/organ/ears/halforc)
 	allows_disabling = FALSE
 
 /datum/customizer/organ/ears/demihuman
@@ -141,6 +160,7 @@
 		/datum/sprite_accessory/ears/big/acrador_long,
 		/datum/sprite_accessory/ears/big/acrador_short,
 		/datum/sprite_accessory/ears/big/sandfox_large,
+		/datum/sprite_accessory/ears/lynx,
 		)
 
 /datum/customizer/organ/ears/anthro
@@ -204,6 +224,7 @@
 		/datum/sprite_accessory/ears/big/acrador_long,
 		/datum/sprite_accessory/ears/big/acrador_short,
 		/datum/sprite_accessory/ears/big/sandfox_large,
+		/datum/sprite_accessory/ears/lynx,
 		)
 
 /datum/customizer/organ/ears/lizard
@@ -219,4 +240,16 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/cobrahood,
 		/datum/sprite_accessory/ears/cobrahoodears,
+		)
+
+/datum/customizer/organ/ears/tiefling
+	customizer_choices = list(/datum/customizer_choice/organ/ears/tiefling)
+	allows_disabling = FALSE
+
+/datum/customizer_choice/organ/ears/tiefling
+	name = "Tiefling Ears"
+	organ_type = /obj/item/organ/ears
+	sprite_accessories = list(
+		/datum/sprite_accessory/ears/elf,
+		/datum/sprite_accessory/ears/elfw,
 		)

@@ -72,7 +72,7 @@
 		handle_liver()
 		update_rogfat()
 		update_rogstam()
-		if(charflaw && !charflaw.ephemeral)
+		if(charflaw && !charflaw.ephemeral && mind)
 			charflaw.flaw_on_life(src)
 		if(health <= 0)
 			adjustOxyLoss(0.5)
@@ -89,8 +89,6 @@
 		if(dna?.species)
 			dna.species.spec_life(src) // for mutantraces
 
-	if(!typing)
-		set_typing_indicator(FALSE)
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 

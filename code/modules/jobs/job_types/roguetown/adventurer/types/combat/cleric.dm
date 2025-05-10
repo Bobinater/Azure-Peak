@@ -34,19 +34,18 @@
 		if("Monk")
 			H.set_blindness(0)
 			to_chat(H, span_warning("You are a wandering acolyte, versed in both miracles and martial arts. You forego the heavy armor paladins wear in favor of a more nimble approach to combat, utilizing your fists."))
-			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-			wrists = /obj/item/clothing/wrists/roguetown/bracers
-			gloves = /obj/item/clothing/gloves/roguetown/chain
-			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-			shoes = /obj/item/clothing/shoes/roguetown/boots
+			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
+			pants = /obj/item/clothing/under/roguetown/tights/black
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+			shoes = /obj/item/clothing/shoes/roguetown/sandals
 			backl = /obj/item/storage/backpack/rogue/satchel
-			belt = /obj/item/storage/belt/rogue/leather
+			belt = /obj/item/storage/belt/rogue/leather/rope
 			beltr = /obj/item/flashlight/flare/torch/lantern
 			beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 			backpack_contents = list(/obj/item/flashlight/flare/torch = 1)
 			var/datum/devotion/C = new /datum/devotion(H, H.patron)
 			C.grant_spells_templar(H)
-			H.mind.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+			H.mind.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
@@ -54,15 +53,7 @@
 			H.mind.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			var/weapons = list("Katar","Knuckle Dusters","MY BARE HANDS!!!")
-			var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-			switch(weapon_choice)
-				if("Katar")
-					backpack_contents += list(/obj/item/rogueweapon/katar = 1)
-				if("Knuckle Dusters")
-					backpack_contents += list(/obj/item/rogueweapon/knuckles = 1)
-				if("MY BARE HANDS!!!")
-					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 			switch(H.patron?.type)
 				if(/datum/patron/old_god)
 					cloak = /obj/item/clothing/cloak/psydontabard
@@ -93,10 +84,9 @@
 					head = /obj/item/clothing/head/roguetown/roguehood
 			H.cmode_music = 'sound/music/combat_holy.ogg'
 			H.change_stat("strength", 2)
-			H.change_stat("endurance", 1)
-			H.change_stat("speed", 2)
-			H.change_stat("perception", -1)
-			H.change_stat("intelligence", -1)
+			H.change_stat("endurance", 2)
+			H.change_stat("constitution", 2)
+			H.change_stat("speed", 1)
 
 		if("Paladin")
 			to_chat(H, span_warning("A holy warrior. Where others of the clergy may have spent their free time studying scriptures, you have instead honed your skills with a blade."))
@@ -126,7 +116,7 @@
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 			switch(H.patron?.type)
 				if(/datum/patron/old_god)
-					armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
+					armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
 					cloak = /obj/item/clothing/cloak/psydontabard
 					head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
 				if(/datum/patron/divine/astrata)
@@ -137,7 +127,7 @@
 					head = /obj/item/clothing/head/roguetown/helmet/heavy/nochelm
 				if(/datum/patron/divine/abyssor)
 					cloak = /obj/item/clothing/cloak/templar/abyssor
-					head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket
+					head = /obj/item/clothing/head/roguetown/helmet/heavy/abyssorgreathelm
 				if(/datum/patron/divine/dendor)
 					cloak = /obj/item/clothing/cloak/templar/dendor
 					head = /obj/item/clothing/head/roguetown/helmet/heavy/dendorhelm

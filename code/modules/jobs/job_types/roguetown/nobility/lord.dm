@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	beltl = /obj/item/storage/keyring/lord
 	l_hand = /obj/item/rogueweapon/lordscepter
 	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1)
-	id = /obj/item/clothing/ring/active/nomag
+	id = /obj/item/scomstone/garrison
 	if(should_wear_femme_clothes(H))
 		pants = /obj/item/clothing/under/roguetown/tights/black
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	desc = "Grant someone a title of honor... Or shame."
 	overlay_state = "recruit_titlegrant"
 	antimagic_allowed = TRUE
-	charge_max = 100
+	recharge_time = 100
 	/// Maximum range for title granting
 	var/title_range = 3
 	/// Maximum length for the title
@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	desc = "Make someone a noble, or strip them of their nobility."
 	overlay_state = "recruit_titlegrant"
 	antimagic_allowed = TRUE
-	charge_max = 100
+	recharge_time = 100
 	/// Maximum range for nobility granting
 	var/nobility_range = 3
 

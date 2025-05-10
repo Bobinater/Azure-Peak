@@ -58,7 +58,7 @@
 		if(M != user)
 			M.visible_message(span_danger("[user] attempts to feed [M] something."), \
 						span_danger("[user] attempts to feed you something."))
-			if(!do_mob(user, M))
+			if(!do_mob(user, M, double_progress = TRUE))
 				return
 			if(!reagents || !reagents.total_volume)
 				return // The drink might be empty after the delay, such as by spam-feeding
@@ -201,7 +201,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 9
 	possible_transfer_amounts = list(9)
-	volume = 70
+	volume = 99
 	flags_inv = HIDEHAIR
 	reagent_flags = OPENCONTAINER
 	obj_flags = CAN_BE_HIT

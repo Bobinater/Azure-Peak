@@ -207,6 +207,12 @@
 	color_key_names = list("Tail", "Inner")
 	can_wag = TRUE
 
+/datum/sprite_accessory/tail/jackal
+	name = "Jackal"
+	icon_state = "jackal"
+	color_keys = 3
+	color_key_names = list("Tail", "Inside", "Stripes")
+
 /datum/sprite_accessory/tail/skunk
 	name = "Skunk"
 	icon_state = "skunk"
@@ -348,3 +354,9 @@
 	color_keys = 2
 	color_key_names = list("Tail", "Tip")
 	can_wag = TRUE
+
+/datum/sprite_accessory/tail/lynx
+	name = "Lynx"
+	icon_state = "lynx"
+	color_keys = 2
+	color_key_names = list("Tail", "Tip")

@@ -17,8 +17,20 @@
 	vision_range = 5
 	aggro_vision_range = 9
 	base_intents = list(/datum/intent/simple/bite/bigrat)
+	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1,
-					/obj/item/natural/hide = 1, /obj/item/natural/bone = 2, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1)
+							/obj/item/natural/hide = 1, 
+							/obj/item/natural/bone = 2, 
+							/obj/item/alch/sinew = 1, 
+							/obj/item/alch/bone = 1, 
+							/obj/item/alch/viscera = 1)
+	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1,
+							/obj/item/natural/hide = 1, 
+							/obj/item/natural/bone = 2, 
+							/obj/item/alch/sinew = 1, 
+							/obj/item/alch/bone = 1, 
+							/obj/item/alch/viscera = 1,
+							/obj/item/natural/fur/rat = 1)
 	faction = list("rats")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_sound = 'sound/combat/wooshes/punch/punchwoosh (2).ogg'
@@ -46,6 +58,7 @@
 	attack_same = 1
 	retreat_health = 0.3
 	aggressive = 1
+	rot_type = null
 
 	remains_type = /obj/effect/decal/remains/bigrat
 	eat_forever = TRUE
@@ -54,7 +67,7 @@
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
 	ai_controller = /datum/ai_controller/big_rat
-
+	melee_cooldown = RAT_ATTACK_SPEED
 	stat_attack = UNCONSCIOUS
 
 /obj/effect/decal/remains/bigrat

@@ -46,7 +46,7 @@
 		H.mind.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
-		H.mind.adjust_spellpoints(1)
+		H.mind.adjust_spellpoints(3)
 		H.grant_language(/datum/language/elvish)
 		H.grant_language(/datum/language/dwarvish)
 		H.grant_language(/datum/language/celestial)
@@ -56,10 +56,13 @@
 		H.grant_language(/datum/language/otavan)
 		H.grant_language(/datum/language/etruscan)
 		H.grant_language(/datum/language/gronnic)
-		H.grant_language(/datum/language/draconic) // All but beast, which is associated with werewolves.
+		H.grant_language(/datum/language/kazengunese)
+		H.grant_language(/datum/language/draconic)
+		H.grant_language(/datum/language/aavnic) // All but beast, which is associated with werewolves.
 		ADD_TRAIT(H, TRAIT_SEEPRICES_SHITTY, "[type]")
 		ADD_TRAIT(H, TRAIT_INTELLECTUAL, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 		H.change_stat("strength", -1)
 		H.change_stat("constitution", -1)
 		H.change_stat("intelligence", 4)
@@ -76,7 +79,7 @@
 	releasedrain = 50
 	chargedrain = 0
 	chargetime = 0
-	charge_max = 30 SECONDS
+	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/invoked/teach/cast(list/targets, mob/user = usr)

@@ -326,31 +326,96 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Cursed Collar"
 	path = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
 
+/datum/loadout_item/cloth_blindfold
+	name = "Cloth Blindfold"
+	path = /obj/item/clothing/mask/rogue/blindfold
+
+/datum/loadout_item/duelmask
+	name = "Duelist's Mask"
+	path = /obj/item/clothing/mask/rogue/duelmask
+
+/datum/loadout_item/psicross
+	name = "Psydonian Cross"
+	path = /obj/item/clothing/neck/roguetown/psicross
+
+/datum/loadout_item/psicross/astrata
+	name = "Amulet of Astrata"
+	path = /obj/item/clothing/neck/roguetown/psicross/astrata
+
+/datum/loadout_item/psicross/noc
+	name = "Amulet of Noc"
+	path = /obj/item/clothing/neck/roguetown/psicross/noc
+
+/datum/loadout_item/psicross/abyssor
+	name = "Amulet of Abyssor"
+	path = /obj/item/clothing/neck/roguetown/psicross/abyssor
+
+/datum/loadout_item/psicross/dendor
+	name = "Amulet of Dendor"
+	path = /obj/item/clothing/neck/roguetown/psicross/dendor
+
+/datum/loadout_item/psicross/necra
+	name = "Amulet of Necra"
+	path = /obj/item/clothing/neck/roguetown/psicross/necra
+
+/datum/loadout_item/psicross/pestra
+	name = "Amulet of Pestra"
+	path = /obj/item/clothing/neck/roguetown/psicross/pestra
+
+/datum/loadout_item/psicross/ravox
+	name = "Amulet of Ravox"
+	path = /obj/item/clothing/neck/roguetown/psicross/ravox
+
+/datum/loadout_item/psicross/malum
+	name = "Amulet of Malum"
+	path = /obj/item/clothing/neck/roguetown/psicross/malum
+
+/datum/loadout_item/psicross/eora
+	name = "Amulet of Eora"
+	path = /obj/item/clothing/neck/roguetown/psicross/eora
+
+/datum/loadout_item/chaperon
+    name = "Chaperon (Normal)"
+    path = /obj/item/clothing/head/roguetown/chaperon
+
+/datum/loadout_item/chaperon/alt
+    name = "Chaperon (Alt)"
+    path = /obj/item/clothing/head/roguetown/chaperon/greyscale
+
+/datum/loadout_item/chaperon/burgher
+    name = "Noble's Chaperon"
+    path = /obj/item/clothing/head/roguetown/chaperon/noble
+
 //Donator Section
 //All these items are stored in the donator_fluff.dm in the azure modular folder for simplicity.
 //All should be subtypes of existing weapons/clothes/armor/gear, whatever, to avoid balance issues I guess. Idk, I'm not your boss.
 
 /datum/loadout_item/donator_plex
-	name = "Rapier di Aliseo"
-	path = /obj/item/rogueweapon/sword/rapier/aliseo
+	name = "Donator Kit - Rapier di Aliseo"
+	path = /obj/item/enchantingkit/plexiant
 	ckeywhitelist = list("plexiant")
 
 /datum/loadout_item/donator_sru
-	name = "Emerald Dress"
-	path = /obj/item/clothing/suit/roguetown/shirt/dress/emerald
+	name = "Donator Kit - Emerald Dress"
+	path = /obj/item/enchantingkit/srusu
 	ckeywhitelist = list("cheekycrenando")
 
 /datum/loadout_item/donator_strudel
-	name = "Grenzelhoftian Mage Vest"
-	path = /obj/item/clothing/suit/roguetown/armor/leather/vest/sofiavest
+	name = "Donator Kit - Grenzelhoftian Mage Vest"
+	path = /obj/item/enchantingkit/strudle
 	ckeywhitelist = list("toasterstrudes")
 
 /datum/loadout_item/donator_bat
-	name = "Handcarved Harp"
-	path = /obj/item/rogue/instrument/harp/handcarved
+	name = "Donator Kit - Handcarved Harp"
+	path = /obj/item/enchantingkit/bat
 	ckeywhitelist = list("kitchifox")
 
 /datum/loadout_item/donator_mansa
-	name = "Wortträger"
-	path = /obj/item/rogueweapon/estoc/worttrager
-	ckeywhitelist = list("pepperoni playboy")
+	name = "Donator Kit - Wortträger"
+	path = /obj/item/enchantingkit/ryebread
+	ckeywhitelist = list("pepperoniplayboy")	//Byond maybe doesn't like spaces. If a name has a space, do it as one continious name.
+
+/datum/loadout_item/donator_rebel
+	name = "Donator Kit - Gilded Sallet"
+	path = /obj/item/enchantingkit/rebel
+	ckeywhitelist = list("rebel0")

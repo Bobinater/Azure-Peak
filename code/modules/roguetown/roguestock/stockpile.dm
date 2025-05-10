@@ -22,6 +22,18 @@
 	importexport_amt = 10
 	passive_generation = 2
 
+/datum/roguestock/stockpile/glass
+	name = "Glass Batch"	//'Raw' glass
+	desc = "A mixture of finely ground materials that is used to make glass."
+	item_type = /obj/item/natural/clay/glassbatch
+	held_items = list(5, 0)
+	payout_price = 4
+	withdraw_price = 7
+	transport_fee = 5
+	export_price = 5
+	importexport_amt = 10
+	passive_generation = 3
+
 /datum/roguestock/stockpile/iron
 	name = "Raw Iron"
 	desc = "Chunks of iron used for smithing."
@@ -235,6 +247,18 @@
 	export_price = 8
 	importexport_amt = 5
 	passive_generation = 1
+
+/datum/roguestock/stockpile/rabbit
+	name = "Cabbit Meat"
+	desc = "Edible flesh harvested from cabbits."
+	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/rabbit
+	held_items = list(0, 0)
+	payout_price = 3
+	withdraw_price = 5
+	transport_fee = 1
+	export_price = 5
+	importexport_amt = 5
+	passive_generation = 2
 
 /datum/roguestock/stockpile/egg
 	name = "Egg"

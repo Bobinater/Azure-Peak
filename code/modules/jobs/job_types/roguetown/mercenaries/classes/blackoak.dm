@@ -35,6 +35,7 @@
 				H.mind.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 				H.mind.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 				H.mind.adjust_skillrank(/datum/skill/misc/tracking, 2, TRUE)
+				H.mind.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
 				H.change_stat("endurance", 2)
 				H.change_stat("constitution", 1)
 				H.change_stat("perception", 1)
@@ -44,6 +45,7 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/plate/elven_plate
 				neck = /obj/item/clothing/neck/roguetown/chaincoif
 				beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+				beltr = /obj/item/flashlight/flare/torch
 				r_hand = /obj/item/rogueweapon/halberd/glaive
 				backr = /obj/item/gwstrap
 				backpack_contents = list(/obj/item/roguekey/mercenary, /obj/item/storage/belt/rogue/pouch/coins/poor)
@@ -60,6 +62,7 @@
 				H.mind.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 				H.mind.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 				H.mind.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
+				H.mind.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
 				H.change_stat("constitution", -1)
 				H.change_stat("endurance", 2)
 				H.change_stat("perception", 2)
@@ -70,7 +73,7 @@
 				beltr = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
 				beltl = /obj/item/quiver/arrows
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-				backpack_contents = list(/obj/item/roguekey/mercenary, /obj/item/storage/belt/rogue/pouch/coins/poor, /obj/item/rogueweapon/huntingknife/idagger/navaja)
+				backpack_contents = list(/obj/item/roguekey/mercenary, /obj/item/storage/belt/rogue/pouch/coins/poor, /obj/item/rogueweapon/huntingknife/idagger/navaja, /obj/item/flashlight/flare/torch)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 
 	//Shared minor skillblock from Wardens

@@ -10,6 +10,7 @@
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	tutorial = "Your lineage is noble, and generations of strong, loyal knights have come before you. You served your time \
 	gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. \
+	Veteran among knights, you lead the crown's knights to battle and organize the training squires. Obey the Marshal and the Crown. \
 	Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns."
 	display_order = JDO_GUARD_CAPTAIN
 	advclass_cat_rolls = list(CTAG_CAPTAIN = 20)
@@ -113,13 +114,14 @@
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_KNIGHTSMAN, TRAIT_GENERIC) 		//The knightly-est knight to ever knight in the realm.
+	ADD_TRAIT(H, TRAIT_GUARDSMAN, TRAIT_GENERIC) 		//The knightly-est knight to ever knight in the realm.
 	H.verbs |= list(/mob/living/carbon/human/proc/request_outlaw, /mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
 	H.adjust_blindness(-3)
 	var/weapons = list(
 		"Zweihander",
 		"Great Mace",
 		"Battle Axe",
+		"Greataxe",
 		"Estoc",
 		"Bastard Sword & Shield",
 		"Flail & Shield",
@@ -135,6 +137,9 @@
 			r_hand = /obj/item/rogueweapon/mace/goden/steel
 		if("Battle Axe")
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle
+		if("Greataxe")
+			r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead
+			backl = /obj/item/gwstrap
 		if("Estoc")
 			r_hand = /obj/item/rogueweapon/estoc
 			backl = /obj/item/gwstrap
@@ -210,7 +215,7 @@
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_KNIGHTSMAN, TRAIT_GENERIC) 		//The knightly-est knight to ever knight in the realm.
+	ADD_TRAIT(H, TRAIT_GUARDSMAN, TRAIT_GENERIC)
 	H.verbs |= list(/mob/living/carbon/human/proc/request_outlaw, /mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
 	H.adjust_blindness(-3)
 	var/weapons = list(
@@ -256,7 +261,7 @@
 	desc = "Recruit someone to your cause."
 	overlay_state = "recruit_bog"
 	antimagic_allowed = TRUE
-	charge_max = 100
+	recharge_time = 100
 	/// Role given if recruitment is accepted
 	var/new_role = "Beggar"
 	/// Faction shown to the user in the recruitment prompt

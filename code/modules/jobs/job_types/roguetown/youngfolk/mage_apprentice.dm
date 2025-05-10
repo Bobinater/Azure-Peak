@@ -3,7 +3,7 @@
 	flag = MAGEAPPRENTICE
 	department_flag = YOUNGFOLK
 	faction = "Station"
-	total_positions = 3
+	total_positions = 4
 	spawn_positions = 4
 
 	allowed_races = RACES_ALL_KINDS
@@ -68,8 +68,10 @@
 			H.mind.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.change_stat("speed", -1)
 			H.change_stat("intelligence", 1)
-		H.mind.adjust_spellpoints(3)
+			H.mind.adjust_spellpoints(2)
+		H.mind.adjust_spellpoints(6)
 		ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 		H.change_stat("intelligence", 2)
 		H.change_stat("speed", 1)
 		H.change_stat("perception", 1)
@@ -105,8 +107,9 @@
 			H.mind.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 			H.change_stat("perception", -1)
 			H.change_stat("intelligence", 1)
-		H.mind.adjust_spellpoints(3)
+		H.mind.adjust_spellpoints(5)
 		ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 		H.change_stat("intelligence", 2)
 		H.change_stat("perception", 2)
 		ADD_TRAIT(H, TRAIT_SEEDKNOW, TRAIT_GENERIC)
@@ -129,8 +132,9 @@
 		H.mind.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
-		H.mind.adjust_spellpoints(3)
+		H.mind.adjust_spellpoints(5)
 		ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 		H.change_stat("intelligence", 3)
 		H.change_stat("speed", 1)
 		H.change_stat("fortune", 1)
@@ -139,6 +143,7 @@
 			H.mind.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.change_stat("speed", -1)
 			H.change_stat("intelligence", 1)
+			H.mind.adjust_spellpoints(1)
 		switch(H.patron?.type)
 			if(/datum/patron/inhumen/zizo)
 				H.cmode_music = 'sound/music/combat_cult.ogg'

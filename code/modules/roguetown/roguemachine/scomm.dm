@@ -119,7 +119,7 @@
 /obj/structure/roguemachine/scomm/MiddleClick(mob/living/carbon/human/user)
 	if(.)
 		return
-	if((HAS_TRAIT(user, TRAIT_GUARDSMAN) || (HAS_TRAIT(user, TRAIT_KNIGHTSMAN)) || (user.job == "Warden") || (user.job == "Squire") || (user.job == "Marshal") || (user.job == "Grand Duke") || (user.job == "Knight Captain") || (user.job == "Grand Duchess")))
+	if((HAS_TRAIT(user, TRAIT_GUARDSMAN) || (user.job == "Warden") || (user.job == "Squire") || (user.job == "Marshal") || (user.job == "Grand Duke") || (user.job == "Knight Captain") || (user.job == "Grand Duchess")))
 		if(alert("Would you like to swap lines or connect to a jabberline?",, "swap", "jabberline") != "jabberline")
 			garrisonline = !garrisonline
 			to_chat(user, span_info("I [garrisonline ? "connect to the garrison SCOMline" : "connect to the general SCOMLINE"]"))
@@ -512,6 +512,14 @@
 		qdel(src)
 	..()
 
+/obj/item/mattcoin/doStrip(mob/stripper, mob/owner)
+	if(!(stripper?.mind.has_antag_datum(/datum/antagonist/bandit))) //You're not a bandit, you can't strip the bandit coin
+		to_chat(stripper, "[src] turns to ash in my hands!")
+		playsound(stripper.loc, 'sound/items/firesnuff.ogg', 100, FALSE, -1)
+		qdel(src)
+		return FALSE
+	. = ..()
+
 /obj/item/mattcoin/attack_right(mob/living/carbon/human/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	var/input_text = input(user, "Enter your message:", "Message")
@@ -726,7 +734,7 @@
 			for(var/obj/item/listenstone/S in SSroguemachine.scomm_machines)
 				S.repeat_message(input_text, src, usedcolor)
 		if(garrisonline)
-			input_text = "<span style='color: [GARRISON_SCOM_COLOR]'>[input_text]</span>" //Prettying up for Garrison line
+			input_text = "<big><span style='color: [GARRISON_SCOM_COLOR]'>[input_text]</span></big>" //Prettying up for Garrison line
 			for(var/obj/item/scomstone/bad/garrison/S in SSroguemachine.scomm_machines)
 				S.repeat_message(input_text, src, usedcolor)
 			for(var/obj/item/scomstone/garrison/S in SSroguemachine.scomm_machines)

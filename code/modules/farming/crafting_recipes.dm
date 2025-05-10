@@ -7,26 +7,6 @@
 	craftdiff = 0
 	time = 2 SECONDS
 
-/datum/crafting_recipe/roguetown/wheatflour
-	name = "flour (wheat)"
-	result = /obj/item/reagent_containers/powder/flour
-	reqs = list(/obj/item/reagent_containers/food/snacks/grown/wheat = 1)
-	structurecraft = /obj/structure/fluff/millstone
-	verbage_simple = "mill"
-	verbage = "mills"
-	craftdiff = -2
-	time = 3
-
-/datum/crafting_recipe/roguetown/oatflour
-	name = "flour (oat)"
-	result = /obj/item/reagent_containers/powder/flour
-	reqs = list(/obj/item/reagent_containers/food/snacks/grown/oat = 1)
-	structurecraft = /obj/structure/fluff/millstone
-	verbage_simple = "mill"
-	verbage = "mills"
-	craftdiff = -2
-	time = 3
-
 /datum/crafting_recipe/roguetown/structure/plough
 	name = "plough"
 	result = /obj/structure/plough
@@ -62,6 +42,17 @@
 	name = "dry westleach leaf"
 	result = /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry
 	reqs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed = 1)
+	structurecraft = /obj/machinery/tanningrack
+	time = 2 SECONDS
+	verbage_simple = "dry"
+	verbage = "dries"
+	craftsound = null
+	skillcraft = null
+
+/datum/crafting_recipe/roguetown/dryrosa
+	name = "dry rosa petals"
+	result = /obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals_dried
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/rosa_petals = 1)
 	structurecraft = /obj/machinery/tanningrack
 	time = 2 SECONDS
 	verbage_simple = "dry"

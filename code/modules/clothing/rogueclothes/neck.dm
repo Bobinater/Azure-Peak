@@ -5,6 +5,21 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/neck.dmi'
 	bloody_icon_state = "bodyblood"
 	experimental_inhand = FALSE
+	alternate_worn_layer = NECK_LAYER
+	var/overarmor
+
+/obj/item/clothing/neck/roguetown/MiddleClick(mob/user, params)
+	. = ..()
+	overarmor = !overarmor
+	to_chat(user, span_info("I [overarmor ? "wear \the [src] over my armor" : "wear \the [src] under my armor"]."))
+	if(overarmor)
+		alternate_worn_layer = NECK_LAYER
+	else
+		alternate_worn_layer = UNDER_ARMOR_LAYER
+	user.update_inv_neck()
+	user.update_inv_cloak()
+	user.update_inv_armor()
+	user.update_inv_shirt()
 
 /obj/item/clothing/neck/roguetown/coif
 	name = "coif"
@@ -14,7 +29,7 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HEAD
 	blocksound = SOFTHIT
 	body_parts_covered = NECK|HAIR|EARS|HEAD
-	armor = list("blunt" = 33, "slash" = 12, "stab" = 22, "piercing" = 2, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 40, "slash" = 12, "stab" = 22, "piercing" = 2, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	adjustable = CAN_CADJUST
 	toggle_icon_state = TRUE
@@ -99,7 +114,7 @@
 	desc = "A more durable, thicker, piece of chain neck protection, though, this one only covers the neck and mouth when pulled up."
 	icon_state = "chainmantle"
 	max_integrity = 300
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 30, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
 	body_parts_covered = NECK|MOUTH
 	slot_flags = ITEM_SLOT_NECK
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
@@ -173,7 +188,7 @@
 /obj/item/clothing/neck/roguetown/bevor
 	name = "bevor"
 	icon_state = "bevor"
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 20, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 
@@ -187,7 +202,7 @@
 /obj/item/clothing/neck/roguetown/gorget
 	name = "gorget"
 	icon_state = "gorget"
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 40, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/skill/craft/armorsmithing
 	max_integrity = 150
@@ -198,10 +213,17 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 
+/obj/item/clothing/neck/roguetown/gorget/copper
+	name = "neck protector"
+	icon_state = "copperneck"
+	desc = "An antique and simple protection for the neck, used more as an accessory by the common folk. But poor protection is still better than nothing."
+	armor = list("blunt" = 50, "slash" = 50, "stab" = 40, "piercing" = 20, "fire" = 0, "acid" = 0)
+	smeltresult = /obj/item/ingot/copper
+
 /obj/item/clothing/neck/roguetown/fencerguard
 	name = "fencer neckguard"
 	icon_state = "fencercollar"
-	armor = list("blunt" = 90, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 10, "slash" = 100, "stab" = 80, "piercing" = 50, "fire" = 0, "acid" = 0)
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/skill/craft/armorsmithing
 	max_integrity = 150
@@ -240,7 +262,7 @@
 	desc = "A metal collar that seems to radiate an ominous aura."
 	icon_state = "cursed_collar"
 	item_state = "cursed_collar"
-	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+	armor = list("blunt" = 10, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/skill/craft/armorsmithing
 	max_integrity = 150
@@ -253,7 +275,7 @@
 /obj/item/clothing/neck/roguetown/psicross
 	name = "psycross"
 	desc = "'With every broken bone, I swore I lived!'"
-	icon_state = "psicross"
+	icon_state = "psycross"
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
@@ -262,6 +284,18 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	grid_width = 32
 	grid_height = 32
+
+/obj/item/clothing/neck/roguetown/psicross/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+	..()
+
+	if(slot == SLOT_WRISTS)
+		mob_overlay_icon = 'icons/roguetown/clothing/onmob/wrists.dmi'
+		sleeved = 'icons/roguetown/clothing/onmob/wrists.dmi'
+	if(slot == SLOT_NECK)
+		mob_overlay_icon = initial(mob_overlay_icon)
+		sleeved = initial(sleeved)
+	
+	return TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/astrata
 	name = "amulet of Astrata"
@@ -347,28 +381,30 @@
 			H.Paralyze(20)
 
 /obj/item/clothing/neck/roguetown/psicross/silver/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	. = ..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(!H.mind)
-			return TRUE
-		var/datum/antagonist/vampirelord/V_lord = H.mind.has_antag_datum(/datum/antagonist/vampirelord/)
-		var/datum/antagonist/werewolf/W = H.mind.has_antag_datum(/datum/antagonist/werewolf/)
-		if(H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
-			to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
-			H.Knockdown(20)
-			H.adjustFireLoss(60)
-			H.Paralyze(20)
-			H.fire_act(1,5)
-		if(V_lord)
-			if(V_lord.vamplevel < 4 && !H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
-				to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
-				H.Knockdown(10)
-				H.Paralyze(10)
-		if(W && W.transformed == TRUE)
-			to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
-			H.Knockdown(20)
-			H.Paralyze(20)
+	if (!.)
+		return FALSE
+
+	if(!ishuman(M))
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	if(!H.mind)
+		return TRUE
+	var/datum/antagonist/vampirelord/V_lord = H.mind.has_antag_datum(/datum/antagonist/vampirelord/)
+	var/datum/antagonist/werewolf/W = H.mind.has_antag_datum(/datum/antagonist/werewolf/)
+	if(H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
+		to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
+		H.Knockdown(20)
+		H.adjustFireLoss(60)
+		H.Paralyze(20)
+		H.fire_act(1,5)
+	if(V_lord && V_lord.vamplevel < 4 && !H.mind.has_antag_datum(/datum/antagonist/vampirelord/lesser))
+		to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
+		H.Knockdown(10)
+		H.Paralyze(10)
+	if(W && W.transformed == TRUE)
+		to_chat(H, span_userdanger("I can't equip the silver, it is my BANE!"))
+		H.Knockdown(20)
+		H.Paralyze(20)
 
 /obj/item/clothing/neck/roguetown/psicross/g
 	name = "golden psycross"
@@ -378,6 +414,31 @@
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
 	sellprice = 100
+
+/obj/item/clothing/neck/roguetown/psicross/pearl //put it as a psycross so it can be used for miracles
+	name = "pearl amulet"
+	icon_state = "pearlcross"
+	desc = "An amulet made of white pearls, usually worn by fishers or sailors."
+	sellprice = 80
+
+/obj/item/clothing/neck/roguetown/psicross/bpearl
+	name = "blue pearl amulet"
+	icon_state = "bpearlcross"
+	desc = "An amulet made of rare blue pearls, usually worn by priests and worshippers of Abyssor, or as lucky charms for captains of ships."
+	sellprice = 220
+
+/obj/item/clothing/neck/roguetown/psicross/shell
+	name = "oyster shell necklace"
+	icon_state = "oyster_necklace"
+	desc = "A necklace of strung-up sea shells, the calming noise they make when they clack together is reminiscent of a shellfish's claws. They remind you that while men no longer live in water, Abyssor will always remember our origins."
+	sellprice = 25
+
+/obj/item/clothing/neck/roguetown/psicross/shell/bracelet
+	name = "shell bracelet"
+	icon_state = "oyster_bracelet"
+	desc = "A beaded bracelet made from sea shells, their rough exterior and glossy interior reminding you that Abyssor's children hide the best gifts at the deepest spots beneath the waves."
+	sellprice = 15
+	slot_flags = ITEM_SLOT_WRISTS
 
 /obj/item/clothing/neck/roguetown/talkstone
 	name = "talkstone"
@@ -488,3 +549,25 @@
 	dropshrink = 0.5
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_MASK
 	body_parts_covered = NECK|FACE
+
+/obj/item/clothing/neck/roguetown/luckcharm
+	name = "luck charm"
+	desc = "A cabbit's foot necklace. Some say it brings good luck."
+	icon_state = "luckcharm"
+	sellprice = 15
+	slot_flags = ITEM_SLOT_NECK
+	var/goodluckactivated = FALSE
+
+/obj/item/clothing/neck/roguetown/luckcharm/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == SLOT_NECK)
+		user.change_stat("fortune", 1) //how much luck stat it gives when equipped
+		goodluckactivated = TRUE
+	return
+
+/obj/item/clothing/neck/roguetown/luckcharm/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(goodluckactivated == TRUE)
+		user.change_stat("fortune", -1) //how much luck stat taken away when unequipped
+		goodluckactivated = FALSE
+	return

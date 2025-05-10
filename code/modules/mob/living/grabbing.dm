@@ -1,7 +1,7 @@
 ///////////OFFHAND///////////////
 /obj/item/grabbing
 	name = "pulling"
-	icon_state = "pulling"
+	icon_state = "grabbing"
 	icon = 'icons/mob/roguehudgrabs.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	possible_item_intents = list(/datum/intent/grab/upgrade)
@@ -87,6 +87,17 @@
 	if(ismob(grabbed))
 		var/mob/M = grabbed
 		M.grabbedby -= src
+		if(iscarbon(M) && sublimb_grabbed)
+			var/mob/living/carbon/carbonmob = M
+			var/obj/item/bodypart/part = carbonmob.get_bodypart(sublimb_grabbed)
+
+			// Edge case: if a weapon becomes embedded in a mob, our "grab" will be destroyed...
+			// In this case, grabbed will be the mob, and sublimb_grabbed will be the weapon, rather than a bodypart
+			// This means we should skip any further processing for the bodypart
+			if(part)
+				part.grabbedby -= src
+				part = null
+				sublimb_grabbed = null
 	if(isturf(grabbed))
 		var/turf/T = grabbed
 		T.grabbedby -= src
@@ -209,17 +220,22 @@
 				var/stun_dur = max(((65 + (skill_diff * 10) + (user.STASTR * 5) - (M.STASTR * 5)) * combat_modifier), 20)
 				var/pincount = 0
 				user.rogfat_add(rand(1,3))
-				while(M == grabbed && !(M.mobility_flags & MOBILITY_STAND))
+				while(M == grabbed && !(M.mobility_flags & MOBILITY_STAND) && (src in M.grabbedby))
 					if(M.IsStun())
 						if(!do_after(user, stun_dur + 1, needhand = 0, target = M))
 							pincount = 0
+							qdel(src)
+							break
+						if(!(src in M.grabbedby))
+							pincount = 0
+							qdel(src)
 							break
 						M.Stun(stun_dur - pincount * 2)	
 						M.Immobilize(stun_dur)	//Made immobile for the whole do_after duration, though
 						user.rogfat_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
 						M.visible_message(span_danger("[user] keeps [M] pinned to the ground!"))
 						pincount += 2
-					else
+					else if(src in M.grabbedby)
 						M.Stun(stun_dur - 10)
 						M.Immobilize(stun_dur)
 						user.rogfat_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
@@ -463,6 +479,7 @@
 	if(HAS_TRAIT(user, TRAIT_STRONGBITE))
 		damage = damage*2
 	C.next_attack_msg.Cut()
+	user.do_attack_animation(C, "bite")
 	if(C.apply_damage(damage, BRUTE, limb_grabbed, armor_block))
 		playsound(C.loc, "smallslash", 100, FALSE, -1)
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)

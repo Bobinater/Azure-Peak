@@ -56,6 +56,8 @@
 #define BB_BASIC_MOB_FOOD_TARGET "BB_basic_food_target"
 ///what corpse we'll next try to eat
 #define BB_BASIC_MOB_CORPSE_TARGET "BB_basic_mob_corpse_target"
+///What creature we want to cocoon
+#define BB_BASIC_MOB_COCOON_TARGET "BB_basic_mob_cocoon_target"
 
 #define BB_BASIC_MOB_TAMED "BB_basic_mob_tamed"
 

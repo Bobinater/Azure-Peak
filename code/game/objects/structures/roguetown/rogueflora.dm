@@ -33,10 +33,8 @@
 						user.put_in_hands(I)
 			return
 
-/obj/structure/flora/roguetree/fire_act(added, maxstacks)
-	if(added <= 5)
-		return
-	return ..()
+/obj/structure/flora/roguetree/spark_act()
+	fire_act()
 
 /obj/structure/flora/roguetree/Initialize()
 	. = ..()
@@ -139,6 +137,18 @@
 /obj/structure/flora/roguetree/stump/burnt/Initialize()
 	. = ..()
 	icon_state = "st[rand(1,2)]"
+
+/obj/structure/flora/roguetree/stump/pine
+	name = "pine stump"
+	icon_state = "dead4"
+	icon = 'icons/obj/flora/pines.dmi'
+	static_debris = list(/obj/item/rogueore/charcoal = 1)
+	stump_type = null
+	pixel_x = -32
+
+/obj/structure/flora/roguetree/stump/pine/Initialize()
+	. = ..()
+	icon_state = "dead[rand(4,5)]"
 
 /obj/structure/flora/roguetree/underworld
 	name = "screaming tree"
@@ -257,7 +267,7 @@
 /obj/structure/flora/roguegrass/bush
 	name = "bush"
 	desc = "A bush, I think I can see some spiders crawling in it."
-	icon_state = "bush1"
+	icon_state = "bush2"
 	layer = ABOVE_ALL_MOB_LAYER
 	var/res_replenish
 	blade_dulling = DULLING_CUT
@@ -269,7 +279,7 @@
 	var/bushtype
 
 /obj/structure/flora/roguegrass/bush/Initialize()
-	if(prob(88))
+	if(prob(88) && isnull(bushtype))
 		bushtype = pickweight(list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue=5,
 					/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison=3,
 					/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed=1))
@@ -337,7 +347,7 @@
 				to_chat(user, span_warning("Picked clean... I should try later."))
 #endif
 /obj/structure/flora/roguegrass/bush/update_icon()
-	icon_state = "bush[rand(1, 4)]"
+	icon_state = "bush[rand(2, 4)]"
 
 /obj/structure/flora/roguegrass/bush/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
@@ -352,6 +362,23 @@
 	if(get_dir(mover.loc, target) == dir)
 		return 0
 	return 1
+
+/obj/structure/flora/roguegrass/bush/westleach
+	name = "westleach bush"
+	desc = "Large, red leaves peek out of it with an alluring aroma."
+	icon_state = "bush1"
+
+/obj/structure/flora/roguegrass/bush/westleach/update_icon()
+	return
+
+/obj/structure/flora/roguegrass/bush/westleach/loot_replenish()
+	. = ..()
+	if(prob(50))
+		looty += /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed
+
+/obj/structure/flora/roguegrass/bush/westleach/Initialize()
+	bushtype = /obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed
+	return ..()
 
 /obj/structure/flora/roguegrass/bush/wall
 	name = "great bush"
@@ -624,9 +651,9 @@
 					B = new B(user.loc)
 					user.put_in_hands(B)
 					if(HAS_TRAIT(user, TRAIT_WOODWALKER))
-						var/obj/item/C = new B(user.loc)
+						var/obj/item/C = new B.type(user.loc)
 						user.put_in_hands(C)
-					user.visible_message("<span class='notice'>[user] finds [HAS_TRAIT(user, TRAIT_WOODWALKER) ? "two " : ""][B] in [src].</span>")
+					user.visible_message("<span class='notice'>[user] finds [HAS_TRAIT(user, TRAIT_WOODWALKER) ? "two of " : ""][B] in [src].</span>")
 					return
 			user.visible_message("<span class='warning'>[user] searches through [src].</span>")
 #ifdef MATURESERVER
@@ -683,3 +710,34 @@
 	desc = "A cluster of tiny mushrooms native to the underdark."
 	icon = 'icons/roguetown/misc/foliage.dmi'
 	icon_state = "tinymushrooms"
+
+/obj/structure/flora/roguetree/pine
+	name = "pine tree"
+	icon_state = "pine1"
+	desc = ""
+	icon = 'icons/obj/flora/pines.dmi'
+	pixel_w = -24
+	density = 0
+	max_integrity = 100
+	static_debris = list(/obj/item/grown/log/tree = 2)
+	stump_type = null
+
+/obj/structure/flora/roguetree/pine/Initialize()
+	. = ..()
+	icon_state = "pine[rand(1, 4)]"
+
+/obj/structure/flora/roguetree/pine/burn()
+	new /obj/structure/flora/roguetree/pine/dead(get_turf(src))
+	qdel(src)
+
+/obj/structure/flora/roguetree/pine/dead
+	name = "burnt pine tree"
+	icon_state = "dead1"
+	max_integrity = 50
+	static_debris = list(/obj/item/rogueore/charcoal = 1)
+	resistance_flags = FIRE_PROOF
+	stump_type = /obj/structure/flora/roguetree/stump/pine
+
+/obj/structure/flora/roguetree/pine/dead/Initialize()
+	. = ..()
+	icon_state = "dead[rand(1, 3)]"

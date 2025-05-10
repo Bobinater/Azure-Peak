@@ -113,7 +113,7 @@
 		/obj/item/flint = 4,
 		/obj/item/rogueweapon/stoneaxe/woodcut = 3,
 		/obj/item/rogueweapon/stoneaxe = 3,
-		/obj/item/rogueweapon/hammer = 3,
+		/obj/item/rogueweapon/hammer/stone = 3,
 		/obj/item/rogueweapon/tongs = 3,
 		/obj/item/rogueweapon/pick = 3,
 
@@ -288,7 +288,7 @@
 		/obj/item/flint = 4,
 		/obj/item/rogueweapon/stoneaxe/woodcut = 3,
 		/obj/item/rogueweapon/stoneaxe = 3,
-		/obj/item/rogueweapon/hammer = 3,
+		/obj/item/rogueweapon/hammer/stone = 3,
 		/obj/item/rogueweapon/tongs = 3,
 		/obj/item/rogueweapon/pick = 3
 	)

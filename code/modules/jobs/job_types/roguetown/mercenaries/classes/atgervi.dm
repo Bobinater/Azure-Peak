@@ -153,6 +153,8 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	worn_x_dimension = 32
 	worn_y_dimension = 48
+	experimental_inhand = FALSE
+	experimental_onhip = FALSE
 
 /obj/item/clothing/shoes/roguetown/boots/leather/atgervi
 	name = "heavy leather boots"

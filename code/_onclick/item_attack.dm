@@ -129,26 +129,13 @@
 	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
 		user.rogfat_add(10)
 	if(M.checkdefense(user.used_intent, user))
-		if(M.d_intent == INTENT_PARRY)
-			if(!M.get_active_held_item() && !M.get_inactive_held_item()) //we parried with a bracer, redirect damage
-				if(M.active_hand_index == 1)
-					user.tempatarget = BODY_ZONE_L_ARM
-				else
-					user.tempatarget = BODY_ZONE_R_ARM
-				if(M.attacked_by(src, user)) //we change intents when attacking sometimes so don't play if we do (embedding items)
-					if(user.used_intent == cached_intent)
-						var/tempsound = user.used_intent.hitsound
-						if(tempsound)
-							playsound(M.loc,  tempsound, 100, FALSE, -1)
-						else
-							playsound(M.loc,  "nodmg", 100, FALSE, -1)
-				log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
-				add_fingerprint(user)
 		if(M.d_intent == INTENT_DODGE)
 			if(!user.used_intent.swingdelay)
 				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
 					user.do_attack_animation(M, visual_effect_icon = user.used_intent.animname)
 		return
+
+
 
 	if(user.zone_selected == BODY_ZONE_PRECISE_R_INHAND)
 		var/offh = 0
@@ -307,7 +294,86 @@
 			newforce = newforce * (8+(mineskill*1.5))
 			shake_camera(user, 1, 1)
 			miner.mind.add_sleep_experience(/datum/skill/labor/mining, (miner.STAINT*0.2))
-
+		if(DULLING_SHAFT_WOOD)	//Weak to cut / chop. No changes vs stab, resistant to blunt
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0.5
+					else
+						dullfactor = 1.3
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						dullfactor = 0.5
+					else
+						dullfactor = 1.5
+				if(BCLASS_STAB)
+					dullfactor = 1
+				if(BCLASS_BLUNT)
+					dullfactor = 0.7
+				if(BCLASS_SMASH)
+					dullfactor = 0.5
+				if(BCLASS_PICK)
+					dullfactor = 0.5
+		if(DULLING_SHAFT_REINFORCED)	//Weak to stab. No changes vs blunt, resistant to cut / chop
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						cont = FALSE
+					else
+						dullfactor = 0.5
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						cont = FALSE
+					else
+						dullfactor = 0.7
+				if(BCLASS_STAB)
+					dullfactor = 1.5
+				if(BCLASS_BLUNT)
+					dullfactor = 1
+				if(BCLASS_SMASH)
+					dullfactor = 1
+				if(BCLASS_PICK)
+					dullfactor = 0.7
+		if(DULLING_SHAFT_METAL)	//Very weak to blunt. No changes vs stab, highly resistant to cut / chop. Pick can actually damage it.
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						cont = FALSE
+					else
+						dullfactor = 0.25
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						cont = FALSE
+					else
+						dullfactor = 0.4
+				if(BCLASS_STAB)
+					dullfactor = 0.75
+				if(BCLASS_BLUNT)
+					dullfactor = 1.3
+				if(BCLASS_SMASH)
+					dullfactor = 1.5
+				if(BCLASS_PICK)
+					dullfactor = 1
+		if(DULLING_SHAFT_GRAND)	//Resistant to all
+			switch(user.used_intent.blade_class)
+				if(BCLASS_CUT)
+					if(!I.remove_bintegrity(1))
+						cont = FALSE
+					else
+						dullfactor = 0.5
+				if(BCLASS_CHOP)
+					if(!I.remove_bintegrity(1))
+						cont = FALSE
+					else
+						dullfactor = 0.5
+				if(BCLASS_STAB)
+					dullfactor = 0.5
+				if(BCLASS_BLUNT)
+					dullfactor = 0.5
+				if(BCLASS_SMASH)
+					dullfactor = 1
+				if(BCLASS_PICK)
+					dullfactor = 0.5
 	newforce = (newforce * user.used_intent.damfactor) * dullfactor
 	if(user.used_intent.get_chargetime() && user.client?.chargedprog < 100)
 		newforce = newforce * 0.5

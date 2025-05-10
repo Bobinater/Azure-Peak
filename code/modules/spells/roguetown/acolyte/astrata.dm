@@ -14,7 +14,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 5 SECONDS
+	recharge_time = 5 SECONDS
 	miracle = TRUE
 	devotion_cost = 30
 
@@ -57,7 +57,7 @@
 	sound = 'sound/magic/revive.ogg'
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 2 MINUTES
+	recharge_time = 2 MINUTES
 	miracle = TRUE
 	devotion_cost = 80
 	/// Amount of PQ gained for reviving people
@@ -102,6 +102,8 @@
 				adjust_playerquality(revive_pq, user.ckey)
 				ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
 			target.mind.remove_antag_datum(/datum/antagonist/zombie)
+		target.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
+		target.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
 		return TRUE
 	revert_cast()
 	return FALSE

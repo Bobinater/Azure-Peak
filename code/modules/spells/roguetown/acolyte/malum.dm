@@ -4,7 +4,6 @@
 	releasedrain = 0
 	chargedrain = 0
 	chargetime = 0
-	range = 1
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	no_early_release = TRUE
@@ -14,7 +13,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	charge_max = 3 MINUTES
+	recharge_time = 3 MINUTES
 	chargetime = 2 SECONDS
 	miracle = TRUE
 	charging_slowdown = 3
@@ -37,7 +36,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	charge_max = 2 MINUTES
+	recharge_time = 2 MINUTES
 	chargetime = 2 SECONDS
 	miracle = TRUE
 	charging_slowdown = 3
@@ -60,7 +59,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 5 MINUTES
+	recharge_time = 5 MINUTES
 	chargetime = 2 SECONDS
 	miracle = TRUE
 	charging_slowdown = 3
@@ -83,7 +82,7 @@
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	charge_max = 25 MINUTES
+	recharge_time = 25 MINUTES
 	chargetime = 10 SECONDS
 	miracle = TRUE
 	charging_slowdown = 3
@@ -398,7 +397,7 @@ var/global/list/anvil_recipe_prices[][]
 	invocation_type = "whisper"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 15 SECONDS
+	recharge_time = 15 SECONDS
 	miracle = TRUE
 	devotion_cost = 15
 

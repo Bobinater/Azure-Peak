@@ -97,6 +97,7 @@
 			H.change_stat("speed", 2)
 			armor = /obj/item/clothing/suit/roguetown/armor/leather
 			head = /obj/item/clothing/head/roguetown/duelhat
+			mask = /obj/item/clothing/mask/rogue/duelmask
 			cloak = /obj/item/clothing/cloak/half
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/black
@@ -197,13 +198,13 @@
 			head = /obj/item/clothing/head/roguetown/bucklehat
 			gloves = /obj/item/clothing/gloves/roguetown/angle
 			backpack_contents = list(/obj/item/flashlight/flare/torch = 1, /obj/item/rogueweapon/huntingknife = 1)
-			beltl = pick(/obj/item/reagent_containers/glass/alchemical/strpot, 
-						/obj/item/reagent_containers/glass/alchemical/conpot, 
-						/obj/item/reagent_containers/glass/alchemical/endpot,
-						/obj/item/reagent_containers/glass/alchemical/spdpot,
-						/obj/item/reagent_containers/glass/alchemical/perpot,
-						/obj/item/reagent_containers/glass/alchemical/intpot,
-						/obj/item/reagent_containers/glass/alchemical/lucpot)
+			beltl = pick(/obj/item/reagent_containers/glass/bottle/alchemical/strpot, 
+						/obj/item/reagent_containers/glass/bottle/alchemical/conpot, 
+						/obj/item/reagent_containers/glass/bottle/alchemical/endpot,
+						/obj/item/reagent_containers/glass/bottle/alchemical/spdpot,
+						/obj/item/reagent_containers/glass/bottle/alchemical/perpot,
+						/obj/item/reagent_containers/glass/bottle/alchemical/intpot,
+						/obj/item/reagent_containers/glass/bottle/alchemical/lucpot)
 
 		if("Flagellant")
 			to_chat(H, span_warning("You are a pacifistic warrior who embraces suffering, believing pain is the path to enlightenment. You take the suffering of others upon yourself."))
@@ -237,7 +238,6 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/damage_transfer)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/affliction_transfer)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/burden_exchange)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/damage_link)
 			
 			pants = /obj/item/clothing/under/roguetown/tights/black

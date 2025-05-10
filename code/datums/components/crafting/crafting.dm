@@ -210,7 +210,11 @@
 			return
 	if(R.structurecraft)
 		if(!(locate(R.structurecraft) in T))
-			to_chat(user, span_warning("I'm missing a structure I need."))
+			var/str
+			if(ispath(R.structurecraft, /obj/))
+				var/obj/O = R.structurecraft
+				str = initial(O.name)
+			to_chat(user, span_warning("I'm missing a structure I need: \the <b>[str]</b>"))
 			return
 	if(check_contents(R, contents))
 		if(check_tools(user, R, contents))
@@ -259,6 +263,8 @@
 							if(X)
 								X.OnCrafted(user.dir, user)
 								X.add_fingerprint(user)
+								if(R.loud)
+									X.loud_message("Construction sounds can be heard")
 						else
 							var/atom/movable/I = new R.result (T)
 							I.CheckParts(parts, R)
@@ -281,7 +287,18 @@
 //					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
 				return 0
 			return "."
-		to_chat(usr, span_warning("I'm missing a tool."))
+		var/str
+		var/toollen = R.tools.len
+		if(toollen)
+			if(toollen > 1)
+				for(var/i = 1, i<=toollen, i++)
+					if(ispath(R.tools[i], /obj/))
+						var/obj/O = R.tools[i]
+						str += "[initial(O.name)][(i != toollen) ? ", " : ""]"
+			else
+				for(var/obj/O as anything in R.tools)
+					str += "[initial(O.name)]"
+		to_chat(usr, span_warning("I'm missing a tool. I need: <b>[str]</b>"))
 		return
 	return ", missing component."
 
@@ -320,6 +337,9 @@
 		for(var/A in R.reqs)
 			amt = R.reqs[A]
 			surroundings = get_environment(user)
+			for(var/atom/movable/IS in surroundings)
+				if(!R.subtype_reqs && (IS.type in subtypesof(A)))
+					surroundings.Remove(IS)
 			surroundings -= Deletion
 			if(ispath(A, /datum/reagent))
 				var/datum/reagent/RG = new A
@@ -408,6 +428,10 @@
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
+		if(DL)
+			var/atom/movable/A = DL
+			if(R.blacklist.Find(A.type))
+				continue
 		qdel(DL)
 
 /datum/component/personal_crafting/proc/component_ui_interact(atom/movable/screen/craft/image, location, control, params, user)

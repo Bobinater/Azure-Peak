@@ -48,7 +48,7 @@
 
 	if(mapswitch == 0)
 		return
-	if(recipient.mind?.assigned_role == "Adventurer" || recipient.mind?.assigned_role == "Mercenary")
+	if(recipient.mind?.assigned_role == "Adventurer" || recipient.mind?.assigned_role == "Mercenary" || recipient.mind?.assigned_role == "Court Agent")
 		// Find tavern area for spawning
 		var/area/spawn_area
 		for(var/area/A in world)
@@ -88,13 +88,17 @@
 
 /datum/virtue/utility/failed_squire
 	name = "Failed Squire"
-	desc = "I was once a squire in training, but failed to achieve knighthood. Though my dreams of glory were dashed, I retained my knowledge of equipment maintenance and repair."
+	desc = "I was once a squire in training, but failed to achieve knighthood. Though my dreams of glory were dashed, I retained my knowledge of equipment maintenance and repair, including how to polish arms and armor."
 	added_traits = list(TRAIT_SQUIRE_REPAIR)
-	added_stashed_items = list("Worker's Hammer" = /obj/item/rogueweapon/hammer)
+	added_stashed_items = list(
+		"Hammer" = /obj/item/rogueweapon/hammer/iron,
+		"Polishing Cream" = /obj/item/polishing_cream,
+		"Fine Brush" = /obj/item/armor_brush
+	)
 	
 /datum/virtue/utility/failed_squire/apply_to_human(mob/living/carbon/human/recipient)
 	to_chat(recipient, span_notice("Though you failed to become a knight, your training in equipment maintenance and repair remains useful."))
-	to_chat(recipient, span_notice("You can retrieve your hammer from a tree, statue, or clock."))
+	to_chat(recipient, span_notice("You can retrieve your hammer and polishing tools from a tree, statue, or clock."))
 
 /datum/virtue/utility/linguist
 	name = "Intellectual"
@@ -124,7 +128,8 @@
 		/datum/language/kazengunese,
 		/datum/language/otavan,
 		/datum/language/etruscan,
-		/datum/language/gronnic
+		/datum/language/gronnic,
+		/datum/language/aavnic
 	)
 		
 	var/list/choices = list()
@@ -223,16 +228,18 @@
     addtimer(CALLBACK(src, .proc/performer_apply, recipient), 50)
 
 /datum/virtue/utility/performer/proc/performer_apply(mob/living/carbon/human/recipient)
-    var/list/instruments = list()
-    for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
-        var/obj/item/rogue/instrument/instr = new instrument_type()
-        instruments[instr.name] = instrument_type
-        qdel(instr)  // Clean up the temporary instance
-        
-    var/chosen_name = input(recipient, "What instrument did I stash?", "STASH") as null|anything in instruments
-    if(chosen_name)
-        var/instrument_type = instruments[chosen_name]
-        recipient.mind?.special_items[chosen_name] = instrument_type
+	var/list/instruments = list()
+	for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
+		if(instrument_type == /obj/item/rogue/instrument/harp/handcarved)
+			continue //Skip the donator personal item harp.
+		var/obj/item/rogue/instrument/instr = new instrument_type()
+		instruments[instr.name] = instrument_type
+		qdel(instr)  // Clean up the temporary instance
+
+	var/chosen_name = input(recipient, "What instrument did I stash?", "STASH") as null|anything in instruments
+	if(chosen_name)
+		var/instrument_type = instruments[chosen_name]
+		recipient.mind?.special_items[chosen_name] = instrument_type
 
 /datum/virtue/utility/larcenous
 	name = "Larcenous"
@@ -245,6 +252,17 @@
 	desc = "You've worked in or around the kitchens enough to steal away a sack of supplies that no one would surely miss, just in case. You've picked up on some cooking tips in your spare time, as well."
 	added_stashed_items = list("Bag of Food" = /obj/item/storage/roguebag/food)
 	added_skills = list(list(/datum/skill/craft/cooking, 3, 6))
+
+/datum/virtue/utility/forester
+	name = "Forester"
+	desc = "The forest is your home, or at least, it used to be. You always long to return and roam free once again, and you have not forgotten your knowledge on how to be self sufficient."
+	added_stashed_items = list("Trusty hoe" = /obj/item/rogueweapon/hoe)
+	added_skills = list(list(/datum/skill/craft/cooking, 2, 2),
+						list(/datum/skill/misc/athletics, 2, 2),
+						list(/datum/skill/labor/farming, 2, 2),
+						list(/datum/skill/labor/fishing, 2, 2),
+						list(/datum/skill/labor/lumberjacking, 2, 2)
+	)
 
 /datum/virtue/utility/mining
 	name = "Miner's Apprentice"

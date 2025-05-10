@@ -12,7 +12,7 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 10 SECONDS
+	recharge_time = 10 SECONDS
 	miracle = TRUE
 	devotion_cost = 10
 
@@ -188,6 +188,8 @@
 				H.adjustBruteLoss(20)
 				playsound(target, 'sound/combat/dismemberment/dismem (2).ogg', 100)
 				H.emote("agony")
+		else
+			target.apply_status_effect(/datum/status_effect/buff/healing, healing)
 		target.visible_message(message_out, message_self)
 		return TRUE
 	revert_cast()
@@ -210,7 +212,7 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 20 SECONDS
+	recharge_time = 20 SECONDS
 	miracle = TRUE
 	devotion_cost = 20
 
@@ -247,7 +249,7 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 10 SECONDS
+	recharge_time = 10 SECONDS
 	miracle = TRUE
 	devotion_cost = 10
 
@@ -280,7 +282,7 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
-	charge_max = 20 SECONDS
+	recharge_time = 20 SECONDS
 	miracle = TRUE
 	devotion_cost = 20
 
@@ -307,7 +309,7 @@
 	releasedrain = 35
 	chargedrain = 1
 	chargetime = 30
-	charge_max = 60 SECONDS
+	recharge_time = 60 SECONDS
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	movement_interrupt = FALSE
