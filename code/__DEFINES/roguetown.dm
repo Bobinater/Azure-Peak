@@ -129,7 +129,6 @@
 	/datum/species/aasimar,\
 	/datum/species/lupian,\
 	/datum/species/vulpkanin,\
-	/datum/species/moth,\
 	/datum/species/dracon,
 
 #define RACES_TOLERATED \
@@ -145,6 +144,7 @@
 #define RACES_SHUNNED \
 	/datum/species/halforc,\
 	/datum/species/anthromorphsmall,\
+	/datum/species/moth,\
 	/datum/species/kobold,\
 
 #define RACES_DESPISED \
@@ -160,6 +160,8 @@
 #define RACES_SHUNNED_UP list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED)
 
 #define RACES_TOLERATED_UP list(RACES_TOLERATED, RACES_RESPECTED)
+
+#define RACES_RESPECTED_UP list(RACES_RESPECTED)
 
 #define NOBLE_RACES_TYPES list(\
 	/datum/species/human/northern,\
